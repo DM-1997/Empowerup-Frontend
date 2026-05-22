@@ -1,0 +1,61 @@
+<div class="register-container">
+
+  <div class="register-card">
+
+    <h1>Criar Conta</h1>
+    <p>Junte-se à EmpowerUp</p>
+
+    <form (ngSubmit)="register()">
+
+      <!-- NOME -->
+      <label>Nome</label>
+      <input
+        type="text"
+        [(ngModel)]="nome"
+        name="nome"
+        placeholder="Seu nome"
+        required
+      />
+
+      <!-- EMAIL -->
+      <label>Email</label>
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        placeholder="ex: email@email.com"
+        required
+      />
+
+      <!-- PASSWORD -->
+      <label>Password</label>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+        placeholder="••••••••"
+        required
+      />
+
+      <!-- TIPO DE UTILIZADOR -->
+      <label>Tipo de conta</label>
+      <select [(ngModel)]="tipo" name="tipo">
+        <option value="APOIADOR">Apoiador</option>
+        <option value="PROPONENTE">Proponente</option>
+      </select>
+
+      <!-- BOTÃO -->
+      <button type="submit">
+        Criar Conta
+      </button>
+
+    </form>
+
+    <p class="login-link">
+      Já tem conta?
+      <a routerLink="/login">Entrar</a>
+    </p>
+
+  </div>
+
+</div>

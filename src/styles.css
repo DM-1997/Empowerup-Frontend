@@ -1,0 +1,27 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f9fafb;
+}
+
+/* APP ROOT LAYOUT */
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ÁREA PRINCIPAL (router-outlet) */
+.page-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;   /* centraliza horizontalmente */
+  padding: 40px 20px;
+}
+
+/* CONTAINER GLOBAL DAS PÁGINAS */
+.container-global {
+  width: 100%;
+  max-width: 1140px;
+}

@@ -1,0 +1,61 @@
+<div class="campaigns-container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Campanhas</h1>
+    <p>Gestão de campanhas da plataforma EmpowerUp</p>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrapper">
+
+    <table class="campaigns-table">
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Utilizador</th>
+          <th>Progresso</th>
+          <th>Estado</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let c of campaigns">
+
+          <td>{{ c.id }}</td>
+          <td>{{ c.titulo }}</td>
+          <td>{{ c.utilizador }}</td>
+
+          <td>
+            €{{ c.arrecadado }} / €{{ c.meta }}
+
+            <div class="progress">
+              <div class="bar"
+                   [style.width.%]="(c.arrecadado / c.meta) * 100">
+              </div>
+            </div>
+          </td>
+
+          <td>
+            <span class="badge" [ngClass]="c.estado">
+              {{ c.estado }}
+            </span>
+          </td>
+
+          <td>
+            <button class="btn-delete" (click)="deleteCampaign(c.id)">
+              Remover
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

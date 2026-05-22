@@ -1,0 +1,47 @@
+.admin-navbar {
+  background: #0f172a;
+  padding: 14px 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+
+  /* FIXAR NO TOPO */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  z-index: 1000;
+}
+
+/* LOGO */
+.navbar-brand {
+  color: white !important;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+/* LINKS */
+.nav-link {
+  color: rgba(255,255,255,0.7) !important;
+  transition: 0.3s;
+  border-radius: 8px;
+  padding: 8px 12px !important;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: white !important;
+  background: rgba(255,255,255,0.1);
+}
+
+/* LINK ATIVO */
+.nav-link.active {
+  background: #2563eb;
+  color: white !important;
+}
+
+/* BOTÃO */
+.btn-light {
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: 500;
+}

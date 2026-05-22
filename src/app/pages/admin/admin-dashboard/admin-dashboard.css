@@ -1,0 +1,84 @@
+.admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 24px 60px;
+}
+
+/* HEADER */
+.header {
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 38px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.header p {
+  color: #64748b;
+  font-size: 16px;
+}
+
+/* GRID */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  text-align: center;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h2 {
+  font-size: 42px;
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #64748b;
+  font-size: 15px;
+}
+
+/* ACTIONS */
+.actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  background: #2563eb;
+  color: white;
+  padding: 14px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #1d4ed8;
+}
+
+.btn.dark {
+  background: #0f172a;
+}
+
+.btn.dark:hover {
+  background: #020617;
+}

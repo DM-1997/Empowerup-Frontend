@@ -1,0 +1,44 @@
+<div class="login-container">
+
+  <div class="login-card">
+
+    <h1>Bem-vindo de volta</h1>
+    <p>Entre na sua conta EmpowerUp</p>
+
+    <form (ngSubmit)="login()">
+
+      <!-- EMAIL -->
+      <label>Email</label>
+      <input
+        type="email"
+        [(ngModel)]="email"
+        name="email"
+        placeholder="ex: utilizador@email.com"
+        required
+      />
+
+      <!-- PASSWORD -->
+      <label>Palavra-passe</label>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+        placeholder="••••••••"
+        required
+      />
+
+      <!-- BOTÃO -->
+      <button type="submit">
+        Entrar
+      </button>
+
+    </form>
+
+    <p class="register-link">
+      Ainda não tem conta?
+      <a routerLink="/register">Criar conta</a>
+    </p>
+
+  </div>
+
+</div>

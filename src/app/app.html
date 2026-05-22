@@ -1,0 +1,11 @@
+<!-- Navbar NORMAL -->
+<app-navbar *ngIf="!isAdminRoute()"></app-navbar>
+
+<div class="page-content">
+  <div class="container-global">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!-- Footer GLOBAL -->
+<app-footer></app-footer>

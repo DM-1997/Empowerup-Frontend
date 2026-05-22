@@ -1,0 +1,64 @@
+<div class="campaign-container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Criar Campanha</h1>
+    <p>Partilhe a sua ideia e comece a angariar apoio</p>
+  </div>
+
+  <!-- FORM -->
+  <form (ngSubmit)="criarCampanha()" class="campaign-form">
+
+    <div class="form-group">
+      <label>Título da Campanha</label>
+      <input type="text" [(ngModel)]="campanha.titulo" name="titulo" required />
+    </div>
+
+    <div class="form-group">
+      <label>Descrição</label>
+      <textarea rows="5" [(ngModel)]="campanha.descricao" name="descricao"></textarea>
+    </div>
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Meta (€)</label>
+        <input type="number" [(ngModel)]="campanha.valorAlvo" name="valorAlvo" />
+      </div>
+
+      <div class="form-group">
+        <label>ID Proponente</label>
+        <input type="number" [(ngModel)]="campanha.proponenteId" name="proponenteId" />
+      </div>
+
+    </div>
+
+    <!-- IMAGEM -->
+    <div class="form-group">
+      <label>Imagem da campanha</label>
+      <input type="text" [(ngModel)]="campanha.imagemUrl" name="imagemUrl" placeholder="URL da imagem" />
+    </div>
+
+    <!-- VÍDEO -->
+<div class="form-group">
+  <label>Vídeo da campanha</label>
+
+  <input
+    type="file"
+    accept="video/*"
+    (change)="onVideoSelected($event)"
+  />
+
+  <small *ngIf="campanha.videoName">
+    Ficheiro selecionado: {{ campanha.videoName }}
+  </small>
+</div>
+
+    <!-- BOTÃO -->
+    <button type="submit" class="btn-primary">
+      Criar Campanha
+    </button>
+
+  </form>
+
+</div>

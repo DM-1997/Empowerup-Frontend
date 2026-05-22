@@ -1,0 +1,86 @@
+.campaigns-container {
+  padding: 120px 24px 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header h1 {
+  font-size: 32px;
+  margin-bottom: 6px;
+}
+
+.header p {
+  color: #64748b;
+}
+
+/* TABLE */
+.table-wrapper {
+  margin-top: 30px;
+  overflow-x: auto;
+}
+
+.campaigns-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+.campaigns-table th,
+.campaigns-table td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.campaigns-table th {
+  background: #f8fafc;
+}
+
+/* PROGRESS */
+.progress {
+  height: 6px;
+  background: #eee;
+  border-radius: 10px;
+  margin-top: 6px;
+}
+
+.bar {
+  height: 6px;
+  background: #2563eb;
+  border-radius: 10px;
+}
+
+/* BADGES */
+.badge {
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ATIVA {
+  background: #10b981;
+  color: white;
+}
+
+.CONCLUIDA {
+  background: #6b7280;
+  color: white;
+}
+
+/* BUTTON */
+.btn-delete {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+}

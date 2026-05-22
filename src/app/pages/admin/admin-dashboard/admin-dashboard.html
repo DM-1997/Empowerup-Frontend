@@ -1,0 +1,42 @@
+<div class="admin-container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>Painel Administrativo</h1>
+    <p>Gestão da plataforma EmpowerUp</p>
+  </div>
+
+  <!-- CARDS -->
+  <div class="stats-grid">
+
+    <div class="card">
+      <h2>{{ totalUsers }}</h2>
+      <p>Utilizadores</p>
+    </div>
+
+    <div class="card">
+      <h2>{{ totalCampaigns }}</h2>
+      <p>Campanhas</p>
+    </div>
+
+    <div class="card">
+      <h2>€{{ totalRaised }}</h2>
+      <p>Total Arrecadado</p>
+    </div>
+
+  </div>
+
+  <!-- AÇÕES -->
+  <div class="actions">
+
+    <a routerLink="/admin/users" class="btn">
+      Gerir Utilizadores
+    </a>
+
+    <a routerLink="/admin/campaigns" class="btn dark">
+      Gerir Campanhas
+    </a>
+
+  </div>
+
+</div>
