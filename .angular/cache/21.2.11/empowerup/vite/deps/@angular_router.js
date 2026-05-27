@@ -1,18 +1,21 @@
 import {
   Title
-} from "./chunk-R5UMRVGP.js";
+} from "./chunk-YIKGPUV2.js";
+import "./chunk-RDZDKBUR.js";
 import {
   HashLocationStrategy,
-  LOCATION_INITIALIZED,
   Location,
   LocationStrategy,
   NavigationAdapterForLocation,
   PRECOMMIT_HANDLER_SUPPORTED,
   PathLocationStrategy,
-  PlatformLocation,
   PlatformNavigation,
   ViewportScroller
-} from "./chunk-FGXQPMOS.js";
+} from "./chunk-4CETIEIK.js";
+import {
+  LOCATION_INITIALIZED,
+  PlatformLocation
+} from "./chunk-BSXEU5O2.js";
 import {
   APP_BOOTSTRAP_LISTENER,
   ApplicationRef,
@@ -119,9 +122,9 @@ import {
   ɵɵloadQuery,
   ɵɵqueryRefresh,
   ɵɵsanitizeUrlOrResourceUrl
-} from "./chunk-Q4J4RZJI.js";
+} from "./chunk-NWD64R63.js";
 
-// ../../node_modules/@angular/router/fesm2022/_router-chunk.mjs
+// node_modules/@angular/router/fesm2022/_router-chunk.mjs
 var PRIMARY_OUTLET = "primary";
 var RouteTitleKey = /* @__PURE__ */ Symbol("RouteTitle");
 var ParamsAsMap = class {
@@ -4508,7 +4511,7 @@ function validateCommands(commands) {
   }
 }
 
-// ../../node_modules/@angular/router/fesm2022/_router_module-chunk.mjs
+// node_modules/@angular/router/fesm2022/_router_module-chunk.mjs
 var ReactiveRouterState = class _ReactiveRouterState {
   router = inject(Router);
   stateManager = inject(StateManager);
@@ -5961,7 +5964,7 @@ function provideRouterInitializer() {
   }];
 }
 
-// ../../node_modules/@angular/router/fesm2022/router.mjs
+// node_modules/@angular/router/fesm2022/router.mjs
 function mapToCanMatch(providers) {
   return providers.map((provider) => (...params) => inject(provider).canMatch(...params));
 }

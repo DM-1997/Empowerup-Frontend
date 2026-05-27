@@ -72,3 +72,36 @@ button:hover {
   color: #0d6efd;
   text-decoration: none;
 }
+
+
+
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  width: 300px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.icon {
+  font-size: 40px;
+  color: green;
+  margin-bottom: 10px;
+}
+
+@keyframes fadeIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
