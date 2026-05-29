@@ -1,32 +1,50 @@
-<div class="page"> 
+<div class="page">
 
   <div class="header">
     <h1>Minhas Campanhas</h1>
     <p>Gerencie todas as suas campanhas criadas</p>
   </div>
 
+  <!-- ALERTA -->
+  <div *ngIf="mensagemSucesso" class="alert-success">
+    {{ mensagemSucesso }}
+  </div>
+
+  <p>Total de campanhas: {{ (campanhas$ | async)?.length || 0 }}</p>
+
   <div class="cards">
 
-    <div class="card" *ngFor="let campanha of campanhas">
+    <div class="card" *ngFor="let campanha of (campanhas$ | async)">
 
-      <img [src]="campanha.imagem" />
+      <img
+        [src]="campanha.imagemUrl || 'https://picsum.photos/300/200'"
+        alt="Imagem campanha"
+      />
 
       <div class="content">
+
         <h3>{{ campanha.titulo }}</h3>
         <p>{{ campanha.descricao }}</p>
 
         <div class="progress">
           <div
             class="bar"
-            [style.width.%]="(campanha.arrecadado / campanha.meta) * 100">
+            [style.width.%]="
+              campanha.valorAlvo > 0
+                ? (campanha.valorArrecadado / campanha.valorAlvo) * 100
+                : 0
+            ">
           </div>
         </div>
 
         <span>
-          Kz {{ campanha.arrecadado }} de Kz {{ campanha.meta }}
+          Kz {{ campanha.valorArrecadado }}
+          de
+          Kz {{ campanha.valorAlvo }}
         </span>
 
         <div class="actions">
+
           <button class="edit" (click)="editar(campanha.id)">
             Editar
           </button>
@@ -34,7 +52,9 @@
           <button class="delete" (click)="eliminar(campanha.id)">
             Eliminar
           </button>
+
         </div>
+
       </div>
 
     </div>

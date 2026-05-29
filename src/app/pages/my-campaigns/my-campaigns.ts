@@ -1,47 +1,48 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BehaviorSubject, switchMap } from 'rxjs';
+import { CampaignService } from '../../core/services/campaign.service';
 
 @Component({
   selector: 'app-my-campaigns',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './my-campaigns.html',
-  styleUrl: './my-campaigns.css',
+  styleUrls: ['./my-campaigns.css'],
 })
 export class MyCampaigns {
 
-  campanhas = [
-    {
-      id: 1,
-      titulo: 'Horta Comunitária',
-      descricao: 'Projeto para criar hortas urbanas sustentáveis.',
-      arrecadado: 6000,
-      meta: 10000,
-      imagem: 'https://picsum.photos/300/200'
-    },
-    {
-      id: 2,
-      titulo: 'Educação Digital',
-      descricao: 'Levar tecnologia e programação para jovens.',
-      arrecadado: 4000,
-      meta: 10000,
-      imagem: 'https://picsum.photos/300/201'
-    },
-    {
-      id: 3,
-      titulo: 'Empreendedorismo Local',
-      descricao: 'Apoio a pequenos negócios comunitários.',
-      arrecadado: 7500,
-      meta: 10000,
-      imagem: 'https://picsum.photos/300/202'
-    }
-  ];
+  private refresh$ = new BehaviorSubject<void>(undefined);
+
+  campanhas$ = this.refresh$.pipe(
+    switchMap(() => this.campaignService.getAllCampaigns())
+  );
+
+  mensagemSucesso: string | null = null;
+
+  constructor(private campaignService: CampaignService) {}
 
   editar(id: number) {
-    console.log('Editar campanha:', id);
+    console.log('Editar:', id);
   }
 
   eliminar(id: number) {
-    console.log('Eliminar campanha:', id);
+    this.campaignService.deleteCampaign(id).subscribe({
+      next: () => {
+
+        // 🔥 força refresh REAL da lista
+        this.refresh$.next();
+
+        // 🔥 mensagem de sucesso
+        this.mensagemSucesso = 'Campanha eliminada com sucesso!';
+
+        setTimeout(() => {
+          this.mensagemSucesso = null;
+        }, 3000);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
 }

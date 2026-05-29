@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login-user',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './login-user.html',
   styleUrls: ['./login-user.css'],
 })
@@ -27,16 +27,18 @@ export class LoginUser {
     };
 
     this.authService.login(payload).subscribe({
-      next: (res) => {
+      next: (res: any) => {
+
         console.log('Login OK:', res);
 
-        // guardar utilizador
-        localStorage.setItem('user', JSON.stringify(res));
+        // guardar utilizador/token
+        this.authService.setUser(res);
 
         alert('Login feito com sucesso!');
 
-        // 🔥 redirecionar para home
+        // redirecionar para home
         this.router.navigate(['/']);
+
       },
 
       error: (err) => {

@@ -1,0 +1,33 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CampaignService {
+
+  private apiUrl = 'http://localhost:8080/api/campaigns';
+
+  constructor(private http: HttpClient) {}
+
+  // CREATE (multipart)
+  createCampaign(data: FormData): Observable<any> {
+    return this.http.post(this.apiUrl, data);
+  }
+
+  // LIST
+  getAllCampaigns(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
+  // ✏️ UPDATE
+  updateCampaign(id: number, data: FormData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, data);
+  }
+
+  // 🗑 DELETE
+  deleteCampaign(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+}
