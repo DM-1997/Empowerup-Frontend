@@ -90,3 +90,45 @@ button {
   background: #ff3b30;
   color: #fff;
 }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  width: 420px;
+  border-radius: 10px;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-save {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+}
+
+.btn-cancel {
+  background: #ccc;
+  border: none;
+  padding: 8px 12px;
+}
