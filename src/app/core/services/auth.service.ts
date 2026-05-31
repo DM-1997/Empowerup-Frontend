@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,10 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
 
   private baseUrl = 'http://localhost:8080/api/users';
+
+  // 🔥 estado global do utilizador (login/logout reativo)
+  private userSubject = new BehaviorSubject<any>(this.getUser());
+  user$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -23,6 +28,7 @@ export class AuthService {
   // 🔐 GUARDAR USER APÓS LOGIN
   setUser(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
+    this.userSubject.next(user); // 🔥 atualiza UI automaticamente
   }
 
   // 🔐 OBTER USER LOGADO
@@ -46,6 +52,7 @@ export class AuthService {
   // 🚪 LOGOUT
   logout() {
     localStorage.removeItem('user');
+    this.userSubject.next(null); // 🔥 atualiza UI automaticamente
   }
 
   // 🔐 VERIFICAR SE ESTÁ LOGADO

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Observable, of } from 'rxjs';
+
 import { AuthService } from '../../core/services/auth.service';
 import { UserService } from '../../core/services/user.service';
 
@@ -9,29 +11,37 @@ import { UserService } from '../../core/services/user.service';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './perfil.html',
-  styleUrl: './perfil.css',
+  styleUrls: ['./perfil.css'],
 })
-export class Perfil implements OnInit {
+export class Perfil {
 
-  usuario: any;
+  usuario$!: Observable<any>;
 
   constructor(
     private userService: UserService,
     private authService: AuthService
-  ) {}
+  ) {
 
-  ngOnInit() {
+    console.log('PERFIL CARREGADO');
+
+    this.loadProfile();
+  }
+
+  loadProfile() {
+
     const user = this.authService.getUser();
 
-    if (!user?.id) return;
+    if (!user?.id) {
 
-    this.userService.getMyProfile(user.id).subscribe({
-      next: (data) => {
-        this.usuario = data;
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
+      console.error('Usuário não encontrado');
+
+      this.usuario$ = of(null);
+
+      return;
+    }
+
+    console.log('BUSCANDO PERFIL');
+
+    this.usuario$ = this.userService.getMyProfile(user.id);
   }
 }

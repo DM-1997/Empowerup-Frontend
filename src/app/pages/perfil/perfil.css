@@ -5,3 +5,8 @@
 .card {
   border-radius: 12px;
 }
+
+img {
+  object-fit: cover;
+  border: 4px solid #eee;
+}

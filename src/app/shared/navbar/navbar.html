@@ -6,43 +6,50 @@
       EmpowerUp
     </a>
 
-    <!-- BOTÃO MOBILE -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
     <!-- MENU -->
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse">
 
       <ul class="navbar-nav ms-auto align-items-center gap-2">
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+          <a class="nav-link" routerLink="/home">Home</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/criar-campanha" routerLinkActive="active">
+          <a class="nav-link" routerLink="/criar-campanha">
             Criar Campanha
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/minhas-campanhas" routerLinkActive="active">
+          <a class="nav-link" routerLink="/minhas-campanhas">
             Minhas Campanhas
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/perfil" routerLinkActive="active">
+          <a class="nav-link" routerLink="/perfil">
             Meu Perfil
           </a>
         </li>
 
-        <!-- LOGIN -->
+        <!-- 🔥 LOGIN / LOGOUT DINÂMICO -->
         <li class="nav-item">
-          <a class="btn btn-outline-dark btn-sm ms-2" routerLink="/login">
+
+          <!-- SE NÃO LOGADO -->
+          <a *ngIf="!user"
+             class="btn btn-outline-dark btn-sm ms-2"
+             routerLink="/login">
             Login
           </a>
+
+          <!-- SE LOGADO -->
+          <button *ngIf="user"
+                  class="btn btn-danger btn-sm ms-2"
+                  (click)="logout()">
+            Logout
+          </button>
+
         </li>
 
       </ul>

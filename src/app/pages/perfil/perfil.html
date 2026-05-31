@@ -1,36 +1,67 @@
-<div class="container py-5">
+<div
+  class="container py-5"
+  *ngIf="usuario$ | async as usuario"
+>
 
   <!-- HEADER PERFIL -->
   <div class="card shadow-sm p-4 text-center">
 
+    <!-- AVATAR -->
     <img
-      [src]="usuario.avatar"
+      [src]="usuario.avatar || 'https://i.pravatar.cc/150?img=12'"
       class="rounded-circle mx-auto mb-3"
       width="120"
       height="120"
       alt="Avatar"
     />
 
-    <h2 class="fw-bold">{{ usuario.nome }}</h2>
-    <p class="text-muted">{{ usuario.email }}</p>
+    <!-- NOME -->
+    <h2 class="fw-bold">
+      {{ usuario.nome }}
+    </h2>
+
+    <!-- EMAIL -->
+    <p class="text-muted">
+      {{ usuario.email }}
+    </p>
 
   </div>
 
   <!-- STATS -->
   <div class="row text-center mt-4">
 
+    <!-- CAMPANHAS CRIADAS -->
     <div class="col-md-6">
+
       <div class="card p-3 shadow-sm">
-        <h3 class="text-primary">{{ usuario.campanhasCriadas }}</h3>
-        <p class="mb-0">Campanhas Criadas</p>
+
+        <h3 class="text-primary">
+          {{ usuario.campanhasCriadas || 0 }}
+        </h3>
+
+        <p class="mb-0">
+          Campanhas Criadas
+        </p>
+
       </div>
+
     </div>
 
+    <!-- CAMPANHAS APOIADAS -->
     <div class="col-md-6">
+
       <div class="card p-3 shadow-sm">
-        <h3 class="text-success">{{ usuario.campanhasApoiadas }}</h3>
-        <p class="mb-0">Campanhas Apoiadas</p>
+
+        <h3 class="text-success">
+          {{ usuario.campanhasApoiadas || 0 }}
+        </h3>
+
+        <p class="mb-0">
+          Campanhas Apoiadas
+        </p>
+
       </div>
+
     </div>
 
   </div>
@@ -38,11 +69,17 @@
   <!-- AÇÕES -->
   <div class="d-flex justify-content-center gap-3 mt-4">
 
-    <button class="btn btn-primary" routerLink="/criar-campanha">
+    <button
+      class="btn btn-primary"
+      routerLink="/criar-campanha"
+    >
       Criar Nova Campanha
     </button>
 
-    <button class="btn btn-outline-dark" routerLink="/minhas-campanhas">
+    <button
+      class="btn btn-outline-dark"
+      routerLink="/minhas-campanhas"
+    >
       Ver Minhas Campanhas
     </button>
 

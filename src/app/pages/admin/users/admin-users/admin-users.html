@@ -1,22 +1,21 @@
 <div class="users-container">
 
-  <!-- HEADER -->
   <div class="header">
     <h1>Utilizadores</h1>
     <p>Gestão de contas da plataforma EmpowerUp</p>
   </div>
 
-  <!-- TABLE -->
   <div class="table-wrapper">
 
     <table class="users-table">
 
+      
       <thead>
         <tr>
           <th>ID</th>
           <th>Nome</th>
           <th>Email</th>
-          <th>Tipo</th>
+          <th>Role</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -27,9 +26,10 @@
           <td>{{ user.id }}</td>
           <td>{{ user.nome }}</td>
           <td>{{ user.email }}</td>
+
           <td>
-            <span class="badge" [ngClass]="user.tipo">
-              {{ user.tipo }}
+            <span class="badge" [ngClass]="user.role">
+              {{ user.role }}
             </span>
           </td>
 

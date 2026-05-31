@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { CampaignService } from '../../core/services/campaign.service';
 import { AuthService } from '../../core/services/auth.service';
@@ -28,11 +29,13 @@ export class CreateCampaign {
 
   constructor(
     private campaignService: CampaignService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   // 📸 IMAGEM
   onImageSelected(event: any) {
+
     const file = event.target.files?.[0];
 
     if (file) {
@@ -43,6 +46,7 @@ export class CreateCampaign {
 
   // 🎥 VÍDEO
   onVideoSelected(event: any) {
+
     const file = event.target.files?.[0];
 
     if (file) {
@@ -76,27 +80,43 @@ export class CreateCampaign {
       formData.append('video', this.campanha.videoFile);
     }
 
-    this.campaignService.createCampaign(formData).subscribe({
-      next: (res) => {
-        console.log('OK:', res);
-        alert('Campanha criada com sucesso!');
-        this.resetForm();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Erro ao criar campanha');
-      }
-    });
+    this.campaignService.createCampaign(formData)
+      .subscribe({
+
+        next: (res) => {
+
+          console.log('Campanha criada:', res);
+
+          // Limpa o formulário
+          this.resetForm();
+
+          // Mensagem de sucesso
+          alert('✅ Campanha criada com sucesso!');
+
+          // Redireciona para a listagem
+          this.router.navigate(['/minhas-campanhas']);
+        },
+
+        error: (err) => {
+
+          console.error('Erro:', err);
+
+          alert('❌ Erro ao criar campanha');
+        }
+      });
   }
 
-  // 🔄 RESET
+  // 🔄 RESET FORM
   resetForm() {
+
     this.campanha = {
       titulo: '',
       descricao: '',
       valorAlvo: 0,
+
       imageFile: null,
       imageName: '',
+
       videoFile: null,
       videoName: ''
     };
