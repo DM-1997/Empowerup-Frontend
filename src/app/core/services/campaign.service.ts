@@ -21,6 +21,12 @@ export class CampaignService {
     return this.http.get<any[]>(this.apiUrl);
   }
 
+  getMyCampaigns(userId: number) {
+  return this.http.get<any[]>(
+    `${this.apiUrl}/my?userId=${userId}`
+  );
+}
+
   // ✏️ UPDATE
   updateCampaign(id: number, data: FormData): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, data);

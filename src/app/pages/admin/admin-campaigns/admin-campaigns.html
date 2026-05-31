@@ -45,11 +45,22 @@
             </span>
           </td>
 
-          <td>
-            <button class="btn-delete" (click)="deleteCampaign(c.id)">
-              Remover
-            </button>
-          </td>
+<td class="actions">
+  <button
+    class="btn-approve"
+    (click)="approveCampaign(c.id)"
+    *ngIf="c.estado !== 'ATIVA'">
+
+    Aprovar
+  </button>
+
+  <button
+    class="btn-delete"
+    (click)="deleteCampaign(c.id)">
+
+    Remover
+  </button>
+</td>
 
         </tr>
       </tbody>

@@ -1,3 +1,7 @@
+  <!-- ✅ mensagem reativa -->
+  <div class="success-message" *ngIf="mensagemSucesso$ | async as msg">
+    {{ msg }}
+  </div>
 <div class="users-container">
 
   <div class="header">
@@ -5,11 +9,12 @@
     <p>Gestão de contas da plataforma EmpowerUp</p>
   </div>
 
+
+
   <div class="table-wrapper">
 
     <table class="users-table">
 
-      
       <thead>
         <tr>
           <th>ID</th>
@@ -21,8 +26,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let user of users">
-
+        <tr *ngFor="let user of (users$ | async)">
           <td>{{ user.id }}</td>
           <td>{{ user.nome }}</td>
           <td>{{ user.email }}</td>
@@ -38,7 +42,6 @@
               Remover
             </button>
           </td>
-
         </tr>
       </tbody>
 

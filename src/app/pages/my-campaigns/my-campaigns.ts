@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, switchMap } from 'rxjs';
 import { CampaignService } from '../../core/services/campaign.service';
-
+import { AuthService } from '../../core/services/auth.service';
 @Component({
   selector: 'app-my-campaigns',
   standalone: true,
@@ -16,7 +16,10 @@ export class MyCampaigns {
   private refresh$ = new BehaviorSubject<void>(undefined);
 
   campanhas$ = this.refresh$.pipe(
-    switchMap(() => this.campaignService.getAllCampaigns())
+    switchMap(() => {
+  const userId = this.authService.getUserId();
+  return this.campaignService.getMyCampaigns(userId!);
+})
   );
 
   mensagemSucesso: string | null = null;
@@ -30,7 +33,7 @@ export class MyCampaigns {
     valorAlvo: 0
   };
 
-  constructor(private campaignService: CampaignService) {}
+  constructor(private campaignService: CampaignService, private authService: AuthService) {}
 
   // 🔵 abrir modal com dados reais
   editar(campanha: any) {

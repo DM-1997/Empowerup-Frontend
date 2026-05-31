@@ -9,7 +9,6 @@ export class AuthService {
 
   private baseUrl = 'http://localhost:8080/api/users';
 
-  // 🔥 estado global do utilizador (login/logout reativo)
   private userSubject = new BehaviorSubject<any>(this.getUser());
   user$ = this.userSubject.asObservable();
 
@@ -25,25 +24,25 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/login`, data);
   }
 
-  // 🔐 GUARDAR USER APÓS LOGIN
+  // 🔐 SET USER
   setUser(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
-    this.userSubject.next(user); // 🔥 atualiza UI automaticamente
+    this.userSubject.next(user);
   }
 
-  // 🔐 OBTER USER LOGADO
+  // 🔐 GET USER
   getUser() {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
 
-  // 🔐 OBTER ID DO USER
+  // 🔐 ID
   getUserId(): number | null {
     const user = this.getUser();
     return user ? user.id : null;
   }
 
-  // 🔐 OBTER ROLE
+  // 🔐 ROLE
   getUserRole(): string | null {
     const user = this.getUser();
     return user ? user.role : null;
@@ -52,11 +51,30 @@ export class AuthService {
   // 🚪 LOGOUT
   logout() {
     localStorage.removeItem('user');
-    this.userSubject.next(null); // 🔥 atualiza UI automaticamente
+    this.userSubject.next(null);
   }
 
-  // 🔐 VERIFICAR SE ESTÁ LOGADO
+  // 🔐 LOGIN STATUS (COM ACTIVE CHECK)
   isLoggedIn(): boolean {
-    return this.getUser() !== null;
+    const user = this.getUser();
+    return user !== null && user.active === true;
+  }
+
+  // 🚨 VERIFICAR SE USER AINDA ESTÁ ATIVO
+  isActiveUser(): boolean {
+    const user = this.getUser();
+    return user?.active === true;
+  }
+
+  // 🔥 FUNÇÃO IMPORTANTE: FORÇAR LOGOUT SE INATIVO
+  validateSession() {
+    const user = this.getUser();
+
+    if (user && user.active === false) {
+      this.logout();
+      return false;
+    }
+
+    return true;
   }
 }

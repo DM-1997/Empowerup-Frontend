@@ -42,4 +42,19 @@ export class AdminCampaigns {
     this.campaigns = this.campaigns.filter(c => c.id !== id);
   }
 
+  approveCampaign(id: number) {
+
+  this.campaigns = this.campaigns.map(c => {
+
+    if (c.id === id && c.estado !== 'ATIVA') {
+      return {
+        ...c,
+        estado: 'ATIVA'
+      };
+    }
+
+    return c;
+  });
+}
+
 }
