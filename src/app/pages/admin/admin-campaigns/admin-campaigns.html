@@ -1,12 +1,10 @@
 <div class="campaigns-container">
 
-  <!-- HEADER -->
   <div class="header">
     <h1>Campanhas</h1>
     <p>Gestão de campanhas da plataforma EmpowerUp</p>
   </div>
 
-  <!-- TABLE -->
   <div class="table-wrapper">
 
     <table class="campaigns-table">
@@ -23,18 +21,19 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let c of campaigns">
+
+        <tr *ngFor="let c of (campaigns$ | async)">
 
           <td>{{ c.id }}</td>
           <td>{{ c.titulo }}</td>
-          <td>{{ c.utilizador }}</td>
+          <td>{{ c.proponente }}</td>
 
           <td>
-            kz {{ c.arrecadado }} / kz {{ c.meta }}
+            kz {{ c.valorArrecadado }} / kz {{ c.valorAlvo }}
 
             <div class="progress">
               <div class="bar"
-                   [style.width.%]="(c.arrecadado / c.meta) * 100">
+                   [style.width.%]="(c.valorArrecadado / c.valorAlvo) * 100">
               </div>
             </div>
           </td>
@@ -45,24 +44,29 @@
             </span>
           </td>
 
-<td class="actions">
-  <button
-    class="btn-approve"
-    (click)="approveCampaign(c.id)"
-    *ngIf="c.estado !== 'ATIVA'">
+          <td class="actions">
 
-    Aprovar
-  </button>
+            <!-- APROVAR -->
+            <button
+              class="btn-approve"
+              (click)="approveCampaign(c.id)"
+              *ngIf="c.estado !== 'ATIVA'">
 
-  <button
-    class="btn-delete"
-    (click)="deleteCampaign(c.id)">
+              Aprovar
+            </button>
 
-    Remover
-  </button>
-</td>
+            <!-- REMOVER -->
+            <button
+              class="btn-delete"
+              (click)="deleteCampaign(c.id)">
+
+              Remover
+            </button>
+
+          </td>
 
         </tr>
+
       </tbody>
 
     </table>
