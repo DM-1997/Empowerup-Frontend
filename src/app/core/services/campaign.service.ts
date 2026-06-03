@@ -36,4 +36,18 @@ export class CampaignService {
   deleteCampaign(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  // 🔥 CAMPANHAS ATIVAS (PROJETOS EM DESTAQUE)
+getActiveCampaigns(): Observable<any[]> {
+  return this.http.get<any[]>(
+    `${this.apiUrl}/active`
+  );
+}
+
+supportCampaign(id: number, valor: number): Observable<any> {
+  return this.http.post(
+    `${this.apiUrl}/${id}/support?valor=${valor}`,
+    {}
+  );
+}
 }

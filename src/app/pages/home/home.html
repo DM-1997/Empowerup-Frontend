@@ -17,7 +17,6 @@
       <a class="btn-secondary" routerLink="/minhas-campanhas">
         Explorar Projetos
       </a>
-
     </div>
 
   </div>
@@ -41,50 +40,36 @@
   </div>
 </section>
 
-<!-- PROJETOS -->
+<!-- PROJETOS DINÂMICOS -->
 <section class="projects">
 
   <h2>Projetos em Destaque</h2>
 
   <div class="grid">
 
-    <div class="card">
-      <img src="https://picsum.photos/400/250" />
-      <h3>Horta Comunitária</h3>
-      <p>Criação de hortas urbanas sustentáveis.</p>
+    <div class="card" *ngFor="let c of (campaigns$ | async)">
+
+      <img [src]="c.imagemUrl || 'https://picsum.photos/400/250'" />
+
+      <h3>{{ c.titulo }}</h3>
+
+      <p>{{ c.descricao }}</p>
 
       <div class="progress">
-        <div class="bar" style="width:60%"></div>
+        <div
+          class="bar"
+          [style.width.%]="c.valorAlvo ? (c.valorArrecadado / c.valorAlvo) * 100 : 0">
+        </div>
       </div>
 
-      <span>Kz 6.000 de Kz 10.000</span>
-      <button>Apoiar</button>
-    </div>
+      <span>
+        Kz {{ c.valorArrecadado }} de Kz {{ c.valorAlvo }}
+      </span>
 
-    <div class="card">
-      <img src="https://picsum.photos/401/250" />
-      <h3>Educação Digital</h3>
-      <p>Programação para jovens em comunidades locais.</p>
+      <button [routerLink]="['/campanhas', c.id, 'apoiar']">
+  Apoiar
+</button>
 
-      <div class="progress">
-        <div class="bar" style="width:40%"></div>
-      </div>
-
-      <span>Kz 4.000 de Kz 10.000</span>
-      <button>Apoiar</button>
-    </div>
-
-    <div class="card">
-      <img src="https://picsum.photos/402/250" />
-      <h3>Empreendedorismo Local</h3>
-      <p>Apoio a pequenos negócios comunitários.</p>
-
-      <div class="progress">
-        <div class="bar" style="width:75%"></div>
-      </div>
-
-      <span>Kz 7.500 de Kz 10.000</span>
-      <button>Apoiar</button>
     </div>
 
   </div>

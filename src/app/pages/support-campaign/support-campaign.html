@@ -1,0 +1,39 @@
+<div class="support-container" *ngIf="campaign">
+
+  <div class="card">
+
+    <img [src]="campaign.imagemUrl || 'https://picsum.photos/600/300'" />
+
+    <h1>{{ campaign.titulo }}</h1>
+
+    <p>{{ campaign.descricao }}</p>
+
+    <div class="progress">
+      <div class="bar"
+        [style.width.%]="campaign.valorAlvo ? (campaign.valorArrecadado / campaign.valorAlvo) * 100 : 0">
+      </div>
+    </div>
+
+    <p>
+      <strong>Kz {{ campaign.valorArrecadado }}</strong>
+      de
+      <strong>Kz {{ campaign.valorAlvo }}</strong>
+    </p>
+
+    <hr />
+
+    <h3>Apoiar esta campanha</h3>
+
+    <input
+      type="number"
+      placeholder="Valor (Kz)"
+      [(ngModel)]="valor"
+    />
+
+    <button (click)="apoiar()" [disabled]="valor <= 0">
+      Apoiar agora
+    </button>
+
+  </div>
+
+</div>

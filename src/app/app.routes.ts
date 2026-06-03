@@ -11,6 +11,7 @@ import { AdminDashboard } from './pages/admin/admin-dashboard/admin-dashboard';
 import { AdminLayout } from './layouts/admin-layout/admin-layout';
 import { AdminUsers } from './pages/admin/users/admin-users/admin-users';
 import { AdminCampaigns } from './pages/admin/admin-campaigns/admin-campaigns';
+import { SupportCampaign } from './pages/support-campaign/support-campaign';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,11 @@ export const routes: Routes = [
     path: 'minhas-campanhas',
     component: MyCampaigns
   },
+
+  {
+  path: 'campanhas/:id/apoiar',
+  component: SupportCampaign
+},
 
   // 🔴 ADMIN AREA
   {
