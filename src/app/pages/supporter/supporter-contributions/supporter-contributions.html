@@ -1,0 +1,160 @@
+<div class="page">
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-info">
+
+      <span class="hero-badge">
+        ❤️ Histórico de Apoios
+      </span>
+
+      <h1>Minhas Contribuições</h1>
+
+      <p>
+        Consulte todas as campanhas que você apoiou, acompanhe os valores
+        contribuídos e o estado de cada contribuição.
+      </p>
+
+    </div>
+
+    <div class="hero-icon">
+
+      💙
+
+    </div>
+
+  </section>
+
+  <!-- RESUMO -->
+
+  <section class="summary">
+
+    <div class="summary-card">
+
+      <h4>Total de Contribuições</h4>
+
+      <h2>{{ contribuicoes.length }}</h2>
+
+    </div>
+
+    <div class="summary-card">
+
+      <h4>Total Investido</h4>
+
+      <h2>
+
+        Kz {{
+        contribuicoes.reduce((t,c)=>t+c.valor,0)
+        | number
+        }}
+
+      </h2>
+
+    </div>
+
+    <div class="summary-card">
+
+      <h4>Campanhas Apoiadas</h4>
+
+      <h2>{{ contribuicoes.length }}</h2>
+
+    </div>
+
+  </section>
+
+  <!-- TABELA -->
+
+  <div class="table-card">
+
+    <div class="table-header">
+
+      <h2>Histórico</h2>
+
+      <span>{{ contribuicoes.length }} registros</span>
+
+    </div>
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+        <tr>
+
+          <th>#</th>
+          <th>Campanha</th>
+          <th>Valor</th>
+          <th>Data</th>
+          <th>Método</th>
+          <th>Estado</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr *ngFor="let c of contribuicoes">
+
+          <td>{{ c.id }}</td>
+
+          <td>
+
+            <div class="campaign">
+
+              <div class="campaign-avatar">
+                💙
+              </div>
+
+              <div>
+
+                <strong>{{ c.campanha }}</strong>
+
+                <small>EmpowerUp</small>
+
+              </div>
+
+            </div>
+
+          </td>
+
+          <td class="money">
+
+            Kz {{ c.valor | number }}
+
+          </td>
+
+          <td>{{ c.data }}</td>
+
+          <td>
+
+            💳 {{ c.metodo }}
+
+          </td>
+
+          <td>
+
+            <span
+              class="badge"
+              [ngClass]="c.estado">
+
+              {{ c.estado }}
+
+            </span>
+
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

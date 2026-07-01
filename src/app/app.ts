@@ -2,8 +2,8 @@ import { Component, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { Navbar } from "./shared/navbar/navbar";
-import { Footer } from "./shared/footer/footer";
+import { Navbar } from './shared/navbar/navbar';
+import { Footer } from './shared/footer/footer';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +23,8 @@ export class App {
 
   constructor(public router: Router) {}
 
-  isAdminRoute(): boolean {
-    return this.router.url.startsWith('/admin');
+  isSupporterRoute(): boolean {
+    return this.router.url.startsWith('/supporter');
   }
 
 }

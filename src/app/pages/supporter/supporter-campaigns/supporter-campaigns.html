@@ -1,0 +1,188 @@
+<div class="page">
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="hero-left">
+
+      <span class="hero-badge">
+        ✨ Plataforma de Crowdfunding
+      </span>
+
+      <h1>
+        Faça parte de uma mudança que transforma vidas.
+      </h1>
+
+      <p>
+        Descubra campanhas inspiradoras, apoie projetos sociais e contribua
+        para um futuro melhor.
+      </p>
+
+      <div class="hero-buttons">
+
+        <button class="btn-primary">
+          🚀 Explorar Campanhas
+        </button>
+
+        <button class="btn-secondary">
+          ➕ Criar Campanha
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="hero-right">
+
+      <img
+        src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?w=700"
+        alt="Crowdfunding">
+
+    </div>
+
+  </section>
+
+  <!-- TÍTULO -->
+
+  <div class="section-title">
+
+    <h2>Campanhas em Destaque</h2>
+
+    <p>
+      Apoie iniciativas que estão fazendo a diferença.
+    </p>
+
+  </div>
+
+  <!-- CARDS -->
+
+  <div class="cards">
+
+    <div
+      class="card"
+      *ngFor="let campanha of campanhas">
+
+      <div class="image">
+
+        <img
+          [src]="campanha.imagem"
+          [alt]="campanha.titulo">
+
+        <span class="badge">
+          ⭐ Em destaque
+        </span>
+
+      </div>
+
+      <div class="content">
+
+        <div class="top-info">
+
+          <span>📂 Social</span>
+
+          <span>📍 Luanda</span>
+
+        </div>
+
+        <h3>{{ campanha.titulo }}</h3>
+
+        <p>
+          {{ campanha.descricao }}
+        </p>
+
+        <div class="organizer">
+
+          <img src="https://i.pravatar.cc/40">
+
+          <div>
+
+            <strong>Organizador</strong>
+
+            <small>EmpowerUp</small>
+
+          </div>
+
+        </div>
+
+        <div class="progress-info">
+
+          <span>
+
+            💰 Kz {{ campanha.arrecadado | number }}
+
+          </span>
+
+          <span>
+
+            {{ (campanha.arrecadado/campanha.meta)*100 | number:'1.0-0' }}%
+
+          </span>
+
+        </div>
+
+        <div class="progress">
+
+          <div
+            class="bar"
+            [style.width.%]="(campanha.arrecadado/campanha.meta)*100">
+
+          </div>
+
+        </div>
+
+        <div class="stats">
+
+          <div>
+
+            <strong>Kz {{ campanha.meta | number }}</strong>
+
+            <span>Meta</span>
+
+          </div>
+
+          <div>
+
+            <strong>
+              Kz {{ campanha.meta-campanha.arrecadado | number }}
+            </strong>
+
+            <span>Falta</span>
+
+          </div>
+
+        </div>
+
+        <div class="footer-card">
+
+          <span>❤️ 245 apoiadores</span>
+
+          <span>📅 18 dias</span>
+
+        </div>
+
+        <div class="buttons">
+
+          <button
+            class="btn-details">
+
+            👁 Ver detalhes
+
+          </button>
+
+          <button
+            class="btn-support"
+            (click)="apoiar(campanha)">
+
+            💙 Apoiar
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

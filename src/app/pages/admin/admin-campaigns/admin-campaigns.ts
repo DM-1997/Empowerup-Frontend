@@ -8,7 +8,7 @@ import { AdminCampaignService } from '../../../core/services/adminCampaign.servi
   standalone: true,
   imports: [CommonModule],
   templateUrl: './admin-campaigns.html',
-  styleUrl: './admin-campaigns.css',
+  styleUrl: './admin-campaigns.css'
 })
 export class AdminCampaigns {
 
@@ -18,21 +18,46 @@ export class AdminCampaigns {
     switchMap(() => this.adminCampaignService.getAllCampaigns())
   );
 
-  constructor(private adminCampaignService: AdminCampaignService) {}
+  modalAberto = false;
 
-  approveCampaign(id: number): void {
-    this.adminCampaignService.approveCampaign(id).subscribe({
-      next: () => this.refresh$.next(),
-      error: (err) => console.error(err)
-    });
+  campanhaSelecionada: any = {};
+
+  constructor(private adminCampaignService: AdminCampaignService){}
+
+  abrirDetalhes(campanha:any){
+
+    this.campanhaSelecionada = {...campanha};
+
+    this.modalAberto = true;
+
   }
 
-  deleteCampaign(id: number): void {
-    if (!confirm('Deseja eliminar esta campanha?')) return;
+  fecharModal(){
+
+    this.modalAberto = false;
+
+  }
+
+  approveCampaign(id:number){
+
+    this.adminCampaignService.approveCampaign(id).subscribe({
+      next:()=>this.refresh$.next(),
+      error:err=>console.error(err)
+    });
+
+  }
+
+  deleteCampaign(id:number){
+
+    if(!confirm("Deseja eliminar esta campanha?")){
+      return;
+    }
 
     this.adminCampaignService.deleteCampaign(id).subscribe({
-      next: () => this.refresh$.next(),
-      error: (err) => console.error(err)
+      next:()=>this.refresh$.next(),
+      error:err=>console.error(err)
     });
+
   }
+
 }

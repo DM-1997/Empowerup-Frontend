@@ -1,0 +1,106 @@
+<div class="profile-page">
+
+  <!-- HERO -->
+
+  <section class="profile-hero">
+
+    <div class="hero-info">
+
+      <span class="hero-badge">
+        👤 Perfil do Apoiador
+      </span>
+
+      <h1>Minha Conta</h1>
+
+      <p>
+        Mantenha suas informações sempre atualizadas para uma melhor
+        experiência na plataforma EmpowerUp.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- CARD -->
+
+  <div class="profile-card">
+
+    <div *ngIf="mensagem" class="success">
+      ✔ {{ mensagem }}
+    </div>
+
+    <!-- FOTO -->
+
+    <div class="photo-section">
+
+      <img
+        [src]="utilizador.foto"
+        alt="Foto do utilizador">
+
+      <h2>{{ utilizador.nome }}</h2>
+
+      <span>Apoiador EmpowerUp</span>
+
+    </div>
+
+    <!-- FORMULÁRIO -->
+
+    <div class="form-grid">
+
+      <div class="form-group">
+
+        <label>👤 Nome</label>
+
+        <input
+          type="text"
+          [(ngModel)]="utilizador.nome">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>📧 Email</label>
+
+        <input
+          type="email"
+          [(ngModel)]="utilizador.email">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>📱 Telefone</label>
+
+        <input
+          type="text"
+          [(ngModel)]="utilizador.telefone">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>📍 Endereço</label>
+
+        <input
+          type="text"
+          [(ngModel)]="utilizador.endereco">
+
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <button
+        class="btn-save"
+        (click)="guardar()">
+
+        💾 Guardar Alterações
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

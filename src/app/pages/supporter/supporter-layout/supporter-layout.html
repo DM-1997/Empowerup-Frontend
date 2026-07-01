@@ -1,0 +1,78 @@
+<div class="layout">
+
+  <!-- MENU LATERAL -->
+
+  <aside class="sidebar">
+
+    <div class="logo">
+
+      <h2>EmpowerUp</h2>
+
+      <span>Apoiador</span>
+
+    </div>
+
+    <nav>
+
+      <a
+        routerLink="/supporter"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact:true}">
+
+        Dashboard
+
+      </a>
+
+      <a
+        routerLink="/supporter/campaigns"
+        routerLinkActive="active">
+
+        Campanhas
+
+      </a>
+
+      <a
+        routerLink="/supporter/contributions"
+        routerLinkActive="active">
+
+        Contribuições
+
+      </a>
+
+      <a
+        routerLink="/supporter/profile"
+        routerLinkActive="active">
+
+        Perfil
+
+      </a>
+
+    </nav>
+
+  </aside>
+
+  <!-- CONTEÚDO -->
+
+  <div class="content">
+
+    <header>
+
+      <h1>Painel do Apoiador</h1>
+
+      <div class="user">
+
+        👤 {{ nome }}
+
+      </div>
+
+    </header>
+
+    <main>
+
+      <router-outlet></router-outlet>
+
+    </main>
+
+  </div>
+
+</div>

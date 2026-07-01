@@ -10,66 +10,173 @@
     <table class="campaigns-table">
 
       <thead>
-        <tr>
-          <th>ID</th>
-          <th>Título</th>
-          <th>Utilizador</th>
-          <th>Progresso</th>
-          <th>Estado</th>
-          <th>Ações</th>
-        </tr>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Utilizador</th>
+        <th>Progresso</th>
+        <th>Estado</th>
+        <th>Ações</th>
+      </tr>
       </thead>
 
       <tbody>
 
-        <tr *ngFor="let c of (campaigns$ | async)">
+      <tr *ngFor="let c of (campaigns$ | async)">
 
-          <td>{{ c.id }}</td>
-          <td>{{ c.titulo }}</td>
-          <td>{{ c.proponente }}</td>
+        <td>{{ c.id }}</td>
 
-          <td>
-            kz {{ c.valorArrecadado }} / kz {{ c.valorAlvo }}
+        <td>{{ c.titulo }}</td>
 
-            <div class="progress">
-              <div class="bar"
-                   [style.width.%]="(c.valorArrecadado / c.valorAlvo) * 100">
-              </div>
+        <td>{{ c.proponente }}</td>
+
+        <td>
+
+          Kz {{ c.valorArrecadado }} / Kz {{ c.valorAlvo }}
+
+          <div class="progress">
+
+            <div
+              class="bar"
+              [style.width.%]="(c.valorArrecadado/c.valorAlvo)*100">
+
             </div>
-          </td>
 
-          <td>
-            <span class="badge" [ngClass]="c.estado">
-              {{ c.estado }}
-            </span>
-          </td>
+          </div>
 
-          <td class="actions">
+        </td>
 
-            <!-- APROVAR -->
-            <button
-              class="btn-approve"
-              (click)="approveCampaign(c.id)"
-              *ngIf="c.estado !== 'ATIVA'">
+        <td>
 
-              Aprovar
-            </button>
+          <span class="badge" [ngClass]="c.estado">
 
-            <!-- REMOVER -->
-            <button
-              class="btn-delete"
-              (click)="deleteCampaign(c.id)">
+            {{ c.estado }}
 
-              Remover
-            </button>
+          </span>
 
-          </td>
+        </td>
 
-        </tr>
+        <td class="actions">
+
+          <button
+            class="btn-details"
+            (click)="abrirDetalhes(c)">
+
+            Detalhes
+
+          </button>
+
+          <button
+            class="btn-approve"
+            *ngIf="c.estado!='ATIVA'"
+            (click)="approveCampaign(c.id)">
+
+            Aprovar
+
+          </button>
+
+          <button
+            class="btn-delete"
+            (click)="deleteCampaign(c.id)">
+
+            Remover
+
+          </button>
+
+        </td>
+
+      </tr>
 
       </tbody>
 
     </table>
+
+  </div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal" *ngIf="modalAberto">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+
+      <h2>Detalhes da Campanha</h2>
+
+      <button class="close" (click)="fecharModal()">
+        ×
+      </button>
+
+    </div>
+
+    <div class="modal-body">
+
+      <img
+        [src]="campanhaSelecionada.imagemUrl || 'https://picsum.photos/800/400'">
+
+      <h2>{{ campanhaSelecionada.titulo }}</h2>
+
+      <p>
+        {{ campanhaSelecionada.descricao }}
+      </p>
+
+      <div class="info">
+
+        <div class="info-card">
+          <h4>Proponente</h4>
+          <p>{{ campanhaSelecionada.proponente }}</p>
+        </div>
+
+        <div class="info-card">
+          <h4>Estado</h4>
+
+          <span
+            class="badge"
+            [ngClass]="campanhaSelecionada.estado">
+
+            {{ campanhaSelecionada.estado }}
+
+          </span>
+
+        </div>
+
+        <div class="info-card">
+          <h4>Meta</h4>
+          <p>Kz {{ campanhaSelecionada.valorAlvo }}</p>
+        </div>
+
+        <div class="info-card">
+          <h4>Arrecadado</h4>
+          <p>Kz {{ campanhaSelecionada.valorArrecadado }}</p>
+        </div>
+
+      </div>
+
+      <div class="progress">
+
+        <div
+          class="bar"
+          [style.width.%]="(campanhaSelecionada.valorArrecadado/campanhaSelecionada.valorAlvo)*100">
+
+        </div>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button
+          class="btn-cancel"
+          (click)="fecharModal()">
+
+          Fechar
+
+        </button>
+
+      </div>
+
+    </div>
 
   </div>
 
