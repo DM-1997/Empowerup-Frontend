@@ -1,35 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 *{
+    margin:0;
+    padding:0;
     box-sizing:border-box;
-    font-family:Inter,sans-serif;
+    font-family:'Inter',sans-serif;
 }
 
 body{
     background:#F8FAFC;
 }
 
-/* Página */
+/* ===========================
+   PÁGINA
+=========================== */
 
 .profile-page{
 
-    max-width:1200px;
+    max-width:1350px;
+
     margin:auto;
-    padding:40px 20px 70px;
+
+    padding:40px 20px 60px;
 
 }
 
-/* HERO */
+/* ===========================
+   HERO
+=========================== */
 
 .profile-hero{
 
-    background:linear-gradient(135deg,#2563EB,#3B82F6);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-    border-radius:25px;
+    background:linear-gradient(135deg,#2563EB,#3B82F6);
 
     color:white;
 
     padding:50px;
+
+    border-radius:24px;
 
     margin-bottom:35px;
 
@@ -45,15 +57,22 @@ body{
 
     position:absolute;
 
-    width:260px;
-    height:260px;
+    width:280px;
+    height:280px;
 
-    background:rgba(255,255,255,.12);
+    background:rgba(255,255,255,.10);
 
     border-radius:50%;
 
-    right:-90px;
-    top:-90px;
+    right:-80px;
+    top:-80px;
+
+}
+
+.hero-info{
+
+    position:relative;
+    z-index:2;
 
 }
 
@@ -67,9 +86,13 @@ body{
 
     background:rgba(255,255,255,.18);
 
-    backdrop-filter:blur(10px);
+    backdrop-filter:blur(12px);
 
     margin-bottom:20px;
+
+    font-size:14px;
+
+    font-weight:600;
 
 }
 
@@ -83,7 +106,7 @@ body{
 
 .profile-hero p{
 
-    max-width:650px;
+    max-width:620px;
 
     line-height:1.8;
 
@@ -91,23 +114,61 @@ body{
 
 }
 
-/* CARD */
+.hero-icon{
+
+    font-size:90px;
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+/* ===========================
+   CARD
+=========================== */
 
 .profile-card{
 
     background:white;
 
-    border-radius:25px;
+    border-radius:22px;
 
     padding:45px;
 
-    box-shadow:0 20px 45px rgba(15,23,42,.08);
-
     border:1px solid #E2E8F0;
+
+    box-shadow:0 20px 40px rgba(15,23,42,.05);
 
 }
 
-/* FOTO */
+/* ===========================
+   ALERTA
+=========================== */
+
+.success{
+
+    background:#DCFCE7;
+
+    color:#166534;
+
+    border:1px solid #BBF7D0;
+
+    padding:16px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    font-weight:600;
+
+    margin-bottom:30px;
+
+}
+
+/* ===========================
+   FOTO
+=========================== */
 
 .photo-section{
 
@@ -119,26 +180,35 @@ body{
 
 .photo-section img{
 
-    width:160px;
-    height:160px;
+    width:170px;
 
-    border-radius:50%;
+    height:170px;
 
     object-fit:cover;
 
+    border-radius:50%;
+
     border:6px solid white;
 
-    box-shadow:0 10px 35px rgba(37,99,235,.25);
+    box-shadow:0 15px 35px rgba(37,99,235,.25);
 
-    margin-bottom:18px;
+    transition:.3s;
+
+}
+
+.photo-section img:hover{
+
+    transform:scale(1.05);
 
 }
 
 .photo-section h2{
 
+    margin-top:20px;
+
     color:#1E293B;
 
-    margin-bottom:5px;
+    font-size:28px;
 
 }
 
@@ -146,15 +216,19 @@ body{
 
     color:#64748B;
 
+    font-size:15px;
+
 }
 
-/* FORM */
+/* ===========================
+   FORMULÁRIO
+=========================== */
 
 .form-grid{
 
     display:grid;
 
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    grid-template-columns:repeat(2,1fr);
 
     gap:25px;
 
@@ -168,51 +242,63 @@ body{
 
 }
 
-label{
+.form-group label{
+
+    margin-bottom:8px;
 
     font-weight:600;
 
     color:#334155;
 
-    margin-bottom:8px;
-
 }
 
-input{
+.form-group input{
 
-    padding:15px;
+    width:100%;
+
+    padding:15px 18px;
 
     border:1px solid #CBD5E1;
 
     border-radius:12px;
 
+    background:#F8FAFC;
+
     font-size:15px;
 
-    transition:.3s;
-
-    background:#F8FAFC;
+    transition:.30s;
 
 }
 
-input:focus{
+.form-group input:hover{
+
+    border-color:#93C5FD;
+
+}
+
+.form-group input:focus{
 
     outline:none;
+
+    background:white;
 
     border-color:#2563EB;
 
     box-shadow:0 0 0 4px rgba(37,99,235,.12);
 
-    background:white;
-
 }
 
-/* BOTÃO */
+/* ===========================
+   BOTÃO
+=========================== */
 
 .actions{
 
     margin-top:35px;
 
-    text-align:right;
+    display:flex;
+
+    justify-content:flex-end;
 
 }
 
@@ -224,7 +310,7 @@ input:focus{
 
     border:none;
 
-    padding:15px 30px;
+    padding:16px 34px;
 
     border-radius:14px;
 
@@ -234,45 +320,76 @@ input:focus{
 
     font-weight:600;
 
-    transition:.3s;
+    transition:.30s;
 
-    box-shadow:0 12px 25px rgba(37,99,235,.25);
+    box-shadow:0 15px 30px rgba(37,99,235,.25);
 
 }
 
 .btn-save:hover{
 
-    transform:translateY(-3px);
+    transform:translateY(-4px);
 
-    box-shadow:0 18px 35px rgba(37,99,235,.35);
-
-}
-
-/* ALERTA */
-
-.success{
-
-    background:#DCFCE7;
-
-    color:#166534;
-
-    border:1px solid #BBF7D0;
-
-    padding:15px;
-
-    border-radius:12px;
-
-    text-align:center;
-
-    margin-bottom:30px;
-
-    font-weight:600;
+    box-shadow:0 20px 40px rgba(37,99,235,.35);
 
 }
 
-/* RESPONSIVO */
+/* ===========================
+   RESPONSIVO
+=========================== */
+
+@media(max-width:900px){
+
+.profile-hero{
+
+flex-direction:column;
+
+text-align:center;
+
+gap:35px;
+
+}
+
+.hero-icon{
+
+font-size:70px;
+
+}
+
+.profile-card{
+
+padding:30px;
+
+}
+
+}
 
 @media(max-width:768px){
+
+.form-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.actions{
+
+justify-content:center;
+
+}
+
+.btn-save{
+
+width:100%;
+
+}
+
+.photo-section img{
+
+width:140px;
+height:140px;
+
+}
 
 .profile-hero{
 
@@ -286,28 +403,9 @@ font-size:32px;
 
 }
 
-.profile-card{
+.profile-hero p{
 
-padding:25px;
-
-}
-
-.actions{
-
-text-align:center;
-
-}
-
-.btn-save{
-
-width:100%;
-
-}
-
-.photo-section img{
-
-width:130px;
-height:130px;
+font-size:15px;
 
 }
 

@@ -1,7 +1,6 @@
 <div class="profile-page">
 
   <!-- HERO -->
-
   <section class="profile-hero">
 
     <div class="hero-info">
@@ -13,10 +12,14 @@
       <h1>Minha Conta</h1>
 
       <p>
-        Mantenha suas informações sempre atualizadas para uma melhor
+        Mantenha os seus dados pessoais atualizados para uma melhor
         experiência na plataforma EmpowerUp.
       </p>
 
+    </div>
+
+    <div class="hero-icon">
+      👤
     </div>
 
   </section>
@@ -25,8 +28,12 @@
 
   <div class="profile-card">
 
-    <div *ngIf="mensagem" class="success">
+    <div
+      *ngIf="mensagem"
+      class="success">
+
       ✔ {{ mensagem }}
+
     </div>
 
     <!-- FOTO -->
@@ -43,7 +50,7 @@
 
     </div>
 
-    <!-- FORMULÁRIO -->
+    <!-- FORM -->
 
     <div class="form-grid">
 

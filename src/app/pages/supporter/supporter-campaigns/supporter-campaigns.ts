@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+
+import { CampaignService } from '../../../core/services/campaign.service';
 
 @Component({
   selector: 'app-supporter-campaigns',
@@ -8,37 +11,91 @@ import { CommonModule } from '@angular/common';
   templateUrl: './supporter-campaigns.html',
   styleUrl: './supporter-campaigns.css',
 })
-export class SupporterCampaigns {
+export class SupporterCampaigns implements OnInit {
 
-  campanhas = [
-    {
-      id: 1,
-      titulo: 'Água para Todos',
-      descricao: 'Ajude famílias a terem acesso à água potável.',
-      imagem: 'https://picsum.photos/400/250?random=1',
-      meta: 500000,
-      arrecadado: 180000
-    },
-    {
-      id: 2,
-      titulo: 'Construção de Escola',
-      descricao: 'Vamos construir uma escola para crianças da comunidade.',
-      imagem: 'https://picsum.photos/400/250?random=2',
-      meta: 1200000,
-      arrecadado: 700000
-    },
-    {
-      id: 3,
-      titulo: 'Centro de Saúde',
-      descricao: 'Contribua para melhorar os serviços de saúde.',
-      imagem: 'https://picsum.photos/400/250?random=3',
-      meta: 900000,
-      arrecadado: 350000
-    }
-  ];
+  campanhas: any[] = [];
+  carregando = true;
 
-  apoiar(campanha: any): void {
-    alert(`Você escolheu apoiar: ${campanha.titulo}`);
+  // ================= MODAL =================
+  modalAberto = false;
+  campanhaSelecionada: any = null;
+
+  // =========================================
+  private readonly IMAGE_URL = 'http://localhost:8080/uploads/';
+
+  constructor(
+    private campaignService: CampaignService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.listarCampanhas();
   }
 
+  // ================= LISTAR CAMPANHAS =================
+
+  listarCampanhas(): void {
+    this.carregando = true;
+
+    this.campaignService.getActiveCampaigns().subscribe({
+      next: (data) => {
+
+        this.campanhas = data.map((campanha: any) => {
+
+          const meta = campanha.meta || 0;
+          const arrecadado = campanha.arrecadado || 0;
+
+          return {
+            ...campanha,
+
+            // imagem otimizada
+            imageUrl:
+              campanha.imagemUrl ||
+              (campanha.imagem
+                ? this.IMAGE_URL + campanha.imagem
+                : 'https://picsum.photos/700/450'),
+
+            // ================= PERFORMANCE =================
+            percentual: meta ? Math.round((arrecadado / meta) * 100) : 0,
+            restante: meta - arrecadado
+          };
+        });
+
+        this.carregando = false;
+      },
+
+      error: (err) => {
+        console.error('Erro ao carregar campanhas:', err);
+        this.carregando = false;
+      }
+    });
+  }
+
+  // ================= APOIAR =================
+
+  apoiar(campanha: any): void {
+    this.router.navigate([
+      '/campanhas',
+      campanha.id,
+      'apoiar'
+    ]);
+  }
+
+  // ================= MODAL =================
+
+  detalhes(campanha: any): void {
+    this.campanhaSelecionada = campanha;
+    this.modalAberto = true;
+  }
+
+  fecharModal(): void {
+    this.modalAberto = false;
+    this.campanhaSelecionada = null;
+  }
+
+  // ================= TRACK BY (IMPORTANTE) =================
+
+  trackById(index: number, item: any): number {
+    return item.id;
+  }
 }
