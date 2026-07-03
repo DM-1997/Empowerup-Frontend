@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { BehaviorSubject, switchMap, map } from 'rxjs';
 
 import { CampaignService } from '../../../core/services/campaign.service';
 
@@ -11,77 +12,51 @@ import { CampaignService } from '../../../core/services/campaign.service';
   templateUrl: './supporter-campaigns.html',
   styleUrl: './supporter-campaigns.css',
 })
-export class SupporterCampaigns implements OnInit {
+export class SupporterCampaigns {
 
-  campanhas: any[] = [];
-  carregando = true;
+  private refresh$ = new BehaviorSubject<void>(undefined);
 
-  // ================= MODAL =================
   modalAberto = false;
   campanhaSelecionada: any = null;
 
-  // =========================================
   private readonly IMAGE_URL = 'http://localhost:8080/uploads/';
+
+  campanhas$ = this.refresh$.pipe(
+    switchMap(() =>
+      this.campaignService.getActiveCampaigns()
+    ),
+    map((data: any[]) =>
+      data.map(campanha => {
+
+        const meta = campanha.meta || 0;
+        const arrecadado = campanha.arrecadado || 0;
+
+        return {
+          ...campanha,
+
+          // 🔥 IMAGEM CORRIGIDA
+          imageUrl:
+            campanha.imagemUrl ||
+            (campanha.imagem
+              ? this.IMAGE_URL + campanha.imagem
+              : 'https://picsum.photos/700/450'),
+
+          // 🔥 PERFORMANCE
+          percentual: meta ? Math.round((arrecadado / meta) * 100) : 0,
+          restante: meta - arrecadado
+        };
+      })
+    )
+  );
 
   constructor(
     private campaignService: CampaignService,
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.listarCampanhas();
-  }
-
-  // ================= LISTAR CAMPANHAS =================
-
-  listarCampanhas(): void {
-    this.carregando = true;
-
-    this.campaignService.getActiveCampaigns().subscribe({
-      next: (data) => {
-
-        this.campanhas = data.map((campanha: any) => {
-
-          const meta = campanha.meta || 0;
-          const arrecadado = campanha.arrecadado || 0;
-
-          return {
-            ...campanha,
-
-            // imagem otimizada
-            imageUrl:
-              campanha.imagemUrl ||
-              (campanha.imagem
-                ? this.IMAGE_URL + campanha.imagem
-                : 'https://picsum.photos/700/450'),
-
-            // ================= PERFORMANCE =================
-            percentual: meta ? Math.round((arrecadado / meta) * 100) : 0,
-            restante: meta - arrecadado
-          };
-        });
-
-        this.carregando = false;
-      },
-
-      error: (err) => {
-        console.error('Erro ao carregar campanhas:', err);
-        this.carregando = false;
-      }
-    });
-  }
-
-  // ================= APOIAR =================
-
   apoiar(campanha: any): void {
-    this.router.navigate([
-      '/campanhas',
-      campanha.id,
-      'apoiar'
-    ]);
+    this.router.navigate(['/campanhas', campanha.id, 'apoiar']);
   }
-
-  // ================= MODAL =================
 
   detalhes(campanha: any): void {
     this.campanhaSelecionada = campanha;
@@ -93,7 +68,9 @@ export class SupporterCampaigns implements OnInit {
     this.campanhaSelecionada = null;
   }
 
-  // ================= TRACK BY (IMPORTANTE) =================
+  refresh(): void {
+    this.refresh$.next();
+  }
 
   trackById(index: number, item: any): number {
     return item.id;

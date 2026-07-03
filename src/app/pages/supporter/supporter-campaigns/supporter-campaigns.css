@@ -754,241 +754,240 @@ grid-template-columns:1fr;
 
 }
 
-}
-/* ===========================
-   MODAL
+}/* ===========================
+   MODAL OVERLAY (CENTRALIZA TUDO)
 =========================== */
 
-.modal-overlay{
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(15,23,42,.55);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:9999;
-
-    backdrop-filter:blur(4px);
-
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+    backdrop-filter: blur(6px);
 }
 
-.modal{
+/* ===========================
+   MODAL BOX
+=========================== */
 
-    width:650px;
+.modal {
+    width: 100%;
+    max-width: 520px;
 
-    max-width:92%;
+    max-height: 90vh; /* evita overflow da tela */
+    overflow: hidden;
 
-    background:#fff;
+    background: #fff;
+    border-radius: 24px;
 
-    border-radius:20px;
+    display: flex;
+    flex-direction: column;
 
-    overflow:hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.25);
 
-    box-shadow:0 25px 60px rgba(0,0,0,.18);
-
-    animation:modalShow .25s ease;
-
-    position:relative;
-
+    animation: modalShow .25s ease;
+    position: relative;
 }
 
-/* BOTÃO FECHAR */
+/* ===========================
+   CLOSE BUTTON
+=========================== */
 
-.close-btn{
+.close-btn {
+    position: absolute;
+    top: 14px;
+    right: 14px;
 
-    position:absolute;
+    width: 38px;
+    height: 38px;
 
-    top:15px;
+    border: none;
+    border-radius: 50%;
+    background: white;
 
-    right:15px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
 
-    width:38px;
+    color: #475569;
 
-    height:38px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.15);
 
-    border:none;
-
-    border-radius:50%;
-
-    background:white;
-
-    cursor:pointer;
-
-    font-size:18px;
-
-    font-weight:700;
-
-    color:#475569;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.15);
-
-    transition:.3s;
-
+    transition: .3s;
+    z-index: 10;
 }
 
-.close-btn:hover{
-
-    background:#F1F5F9;
-
-    transform:rotate(90deg);
-
+.close-btn:hover {
+    transform: rotate(90deg);
+    background: #F1F5F9;
 }
 
-/* IMAGEM */
+/* ===========================
+   IMAGE
+=========================== */
 
-.modal-image{
-
-    width:100%;
-
-    height:220px;
-
-    object-fit:cover;
-
+.modal-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
 }
 
-/* CONTEÚDO */
-
-.modal h2{
-
-    margin:22px 25px 10px;
-
-    color:#1E293B;
-
-    font-size:28px;
-
+.modal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.modal p{
+/* ===========================
+   CONTENT (CENTRALIZADO)
+=========================== */
 
-    margin:0 25px 20px;
+.modal-content {
+    padding: 22px 24px;
 
-    color:#64748B;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 
-    line-height:1.7;
+    gap: 14px;
 
+    overflow-y: auto;
 }
 
-/* RESUMO */
+/* ===========================
+   TITULO
+=========================== */
 
-.info{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    gap:15px;
-
-    margin:0 25px 20px;
-
+.modal h2 {
+    font-size: 24px;
+    color: #1E293B;
+    font-weight: 800;
 }
 
-.info div{
+/* ===========================
+   DESCRIÇÃO
+=========================== */
 
-    background:#F8FAFC;
-
-    padding:15px;
-
-    border-radius:12px;
-
-    text-align:center;
-
+.modal p {
+    color: #64748B;
+    line-height: 1.6;
+    font-size: 14px;
 }
 
-.info span{
+/* ===========================
+   PROGRESSO
+=========================== */
 
-    display:block;
-
-    color:#64748B;
-
-    font-size:13px;
-
-    margin-bottom:6px;
-
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-weight: 600;
+    font-size: 14px;
+    margin-top: 10px;
 }
 
-.info strong{
-
-    color:#2563EB;
-
-    font-size:17px;
-
+.progress {
+    width: 100%;
+    height: 10px;
+    background: #E2E8F0;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
-/* PROGRESSO */
-
-.modal .progress{
-
-    margin:0 25px 25px;
-
+.bar {
+    height: 100%;
+    background: linear-gradient(90deg,#2563EB,#60A5FA);
+    border-radius: 20px;
 }
 
-/* BOTÕES */
+/* ===========================
+   STATS
+=========================== */
 
-.actions{
-
-    display:flex;
-
-    gap:15px;
-
-    padding:0 25px 25px;
-
+.stats {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+    margin-top: 10px;
 }
 
-.actions button{
-
-    flex:1;
-
+.stats div {
+    background: #F8FAFC;
+    border-radius: 12px;
+    padding: 12px;
 }
 
-/* ANIMAÇÃO */
+.stats strong {
+    display: block;
+    color: #2563EB;
+    font-size: 16px;
+}
 
-@keyframes modalShow{
+/* ===========================
+   BOTÕES
+=========================== */
 
-    from{
+.modal-buttons {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
 
-        opacity:0;
+.modal-buttons button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+}
 
-        transform:scale(.9);
+/* fechar */
+.btn-details {
+    background: #EEF2FF;
+    color: #2563EB;
+}
 
+/* apoiar */
+.btn-support {
+    background: linear-gradient(135deg,#2563EB,#3B82F6);
+    color: white;
+}
+
+/* ===========================
+   ANIMAÇÃO
+=========================== */
+
+@keyframes modalShow {
+    from {
+        opacity: 0;
+        transform: scale(.92);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===========================
+   RESPONSIVO
+=========================== */
+
+@media (max-width: 600px) {
+
+    .modal {
+        max-width: 95%;
     }
 
-    to{
-
-        opacity:1;
-
-        transform:scale(1);
-
+    .stats {
+        grid-template-columns: 1fr;
     }
-
-}
-
-/* RESPONSIVO */
-
-@media(max-width:650px){
-
-    .modal{
-
-        width:95%;
-
-    }
-
-    .info{
-
-        grid-template-columns:1fr;
-
-    }
-
-    .actions{
-
-        flex-direction:column;
-
-    }
-
 }
