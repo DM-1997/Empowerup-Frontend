@@ -21,23 +21,46 @@ export class LoginUser {
   ) {}
 
   login() {
+
     const payload = {
       email: this.email,
       password: this.password
     };
 
     this.authService.login(payload).subscribe({
+
       next: (res: any) => {
 
         console.log('Login OK:', res);
 
-        // guardar utilizador/token
+        // Guarda o utilizador
         this.authService.setUser(res);
 
         alert('Login feito com sucesso!');
 
-        // redirecionar para home
-        this.router.navigate(['/']);
+        // Obtém o perfil
+        const role = this.authService.getUserRole();
+
+        switch (role) {
+
+          case 'SUPPORTER':
+          case 'DONOR':
+          case 'DOADOR':
+            this.router.navigate(['/supporter']);
+            break;
+
+          case 'ADMIN':
+            this.router.navigate(['/admin']);
+            break;
+
+          case 'ORGANIZATION':
+            this.router.navigate(['/organization']);
+            break;
+
+          default:
+            this.router.navigate(['/']);
+            break;
+        }
 
       },
 
@@ -45,6 +68,9 @@ export class LoginUser {
         console.error('Erro login:', err);
         alert('Credenciais inválidas');
       }
+
     });
+
   }
+
 }

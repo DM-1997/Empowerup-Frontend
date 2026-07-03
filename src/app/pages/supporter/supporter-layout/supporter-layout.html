@@ -1,76 +1,63 @@
-<div class="layout">
+<div class="d-flex min-vh-100 bg-light">
 
-  <!-- MENU LATERAL -->
+  <!-- SIDEBAR -->
+  <aside class="bg-primary text-white p-4 d-flex flex-column" style="width: 260px;">
 
-  <aside class="sidebar">
-
-    <div class="logo">
-
-      <h2>EmpowerUp</h2>
-
-      <span>Apoiador</span>
-
+    <!-- LOGO -->
+    <div class="text-center mb-5">
+      <h3 class="mb-0">EmpowerUp</h3>
+      <small class="text-white-50">Doador</small>
     </div>
 
-    <nav>
+    <!-- MENU -->
+    <nav class="nav flex-column gap-2">
 
-      <a
-        routerLink="/supporter"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact:true}">
+      <a class="nav-link text-white rounded px-3 py-2"
+   routerLink="/supporter"
+   routerLinkActive="text-warning fw-bold ps-4"
+   [routerLinkActiveOptions]="{ exact: true }">
+  <span class="me-2">➤</span> Dashboard
+</a>
 
-        Dashboard
+<a class="nav-link text-white rounded px-3 py-2"
+   routerLink="/supporter/campaigns"
+   routerLinkActive="text-warning fw-bold ps-4">
+  <span class="me-2">➤</span> Campanhas
+</a>
 
-      </a>
+<a class="nav-link text-white rounded px-3 py-2"
+   routerLink="/supporter/contributions"
+   routerLinkActive="text-warning fw-bold ps-4">
+  <span class="me-2">➤</span> Contribuições
+</a>
 
-      <a
-        routerLink="/supporter/campaigns"
-        routerLinkActive="active">
-
-        Campanhas
-
-      </a>
-
-      <a
-        routerLink="/supporter/contributions"
-        routerLinkActive="active">
-
-        Contribuições
-
-      </a>
-
-      <a
-        routerLink="/supporter/profile"
-        routerLinkActive="active">
-
-        Perfil
-
-      </a>
+<a class="nav-link text-white rounded px-3 py-2"
+   routerLink="/supporter/profile"
+   routerLinkActive="text-warning fw-bold ps-4">
+  <span class="me-2">➤</span> Perfil
+</a>
 
     </nav>
 
   </aside>
 
-  <!-- CONTEÚDO -->
+  <!-- CONTENT -->
+  <div class="flex-grow-1">
 
-  <div class="content">
+    <!-- HEADER -->
+    <header class="bg-white shadow-sm px-4 py-3 d-flex justify-content-between align-items-center">
 
-    <header>
+      <h4 class="mb-0 fw-bold text-dark">Painel do Doador</h4>
 
-      <h1>Painel do Apoiador</h1>
-
-      <div class="user">
-
+      <div class="badge bg-primary px-3 py-2">
         👤 {{ nome }}
-
       </div>
 
     </header>
 
-    <main>
-
+    <!-- MAIN -->
+    <main class="p-4">
       <router-outlet></router-outlet>
-
     </main>
 
   </div>

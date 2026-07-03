@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-supporter-dashboard',
@@ -8,14 +9,26 @@ import { CommonModule } from '@angular/common';
   templateUrl: './supporter-dashboard.html',
   styleUrl: './supporter-dashboard.css',
 })
-export class SupporterDashboard {
+export class SupporterDashboard implements OnInit {
 
-  nome = 'Emerson';
+  nome = '';
 
   totalCampanhas = 8;
 
   totalContribuido = 250000;
 
   ultimaCampanha = 'Água para Todos';
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+
+    const user = this.authService.getUser();
+
+    if (user) {
+      this.nome = user.name || user.nome;
+    }
+
+  }
 
 }

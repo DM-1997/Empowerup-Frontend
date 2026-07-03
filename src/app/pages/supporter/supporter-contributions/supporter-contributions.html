@@ -1,153 +1,187 @@
-<div class="page">
+<div class="container py-5">
 
   <!-- HERO -->
+  <div class="row align-items-center bg-primary text-white rounded-4 p-5 mb-5 shadow-sm position-relative overflow-hidden">
 
-  <section class="hero">
+    <div class="col-lg-8">
 
-    <div class="hero-info">
-
-      <span class="hero-badge">
+      <span class="badge bg-light text-primary mb-3 px-3 py-2">
         ❤️ Histórico de Apoios
       </span>
 
-      <h1>Minhas Contribuições</h1>
+      <h1 class="fw-bold display-6">
+        Minhas Contribuições
+      </h1>
 
-      <p>
-        Consulte todas as campanhas que você apoiou, acompanhe os valores
-        contribuídos e o estado de cada contribuição.
+      <p class="lead mb-0">
+        Consulte todas as campanhas que você apoiou, acompanhe os valores contribuídos e o estado de cada contribuição.
       </p>
 
     </div>
 
-    <div class="hero-icon">
+    <div class="col-lg-4 text-center mt-4 mt-lg-0">
 
-      💙
+      <div class="display-1">
+        💙
+      </div>
 
     </div>
 
-  </section>
+  </div>
 
   <!-- RESUMO -->
+  <div class="row g-4 mb-5">
 
-  <section class="summary">
+    <div class="col-md-4">
 
-    <div class="summary-card">
+      <div class="card border-0 shadow-sm h-100 text-center">
 
-      <h4>Total de Contribuições</h4>
+        <div class="card-body">
 
-      <h2>{{ contribuicoes.length }}</h2>
+          <h6 class="text-muted">Total de Contribuições</h6>
 
-    </div>
+          <h2 class="fw-bold text-primary">
+            {{ contribuicoes.length }}
+          </h2>
 
-    <div class="summary-card">
+        </div>
 
-      <h4>Total Investido</h4>
-
-      <h2>
-
-        Kz {{
-        contribuicoes.reduce((t,c)=>t+c.valor,0)
-        | number
-        }}
-
-      </h2>
+      </div>
 
     </div>
 
-    <div class="summary-card">
+    <div class="col-md-4">
 
-      <h4>Campanhas Apoiadas</h4>
+      <div class="card border-0 shadow-sm h-100 text-center">
 
-      <h2>{{ contribuicoes.length }}</h2>
+        <div class="card-body">
+
+          <h6 class="text-muted">Total Investido</h6>
+
+          <h2 class="fw-bold text-success">
+
+            Kz {{ contribuicoes.reduce((t,c)=>t+c.valor,0) | number }}
+
+          </h2>
+
+        </div>
+
+      </div>
 
     </div>
 
-  </section>
+    <div class="col-md-4">
+
+      <div class="card border-0 shadow-sm h-100 text-center">
+
+        <div class="card-body">
+
+          <h6 class="text-muted">Campanhas Apoiadas</h6>
+
+          <h2 class="fw-bold text-primary">
+            {{ contribuicoes.length }}
+          </h2>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 
   <!-- TABELA -->
+  <div class="card border-0 shadow-sm">
 
-  <div class="table-card">
+    <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center">
 
-    <div class="table-header">
+      <h5 class="mb-0 fw-bold">Histórico</h5>
 
-      <h2>Histórico</h2>
-
-      <span>{{ contribuicoes.length }} registros</span>
+      <span class="text-muted">
+        {{ contribuicoes.length }} registros
+      </span>
 
     </div>
 
-    <div class="table-container">
+    <div class="table-responsive">
 
-      <table>
+      <table class="table table-hover align-middle mb-0">
 
-        <thead>
+        <thead class="table-light">
 
-        <tr>
+          <tr>
 
-          <th>#</th>
-          <th>Campanha</th>
-          <th>Valor</th>
-          <th>Data</th>
-          <th>Método</th>
-          <th>Estado</th>
+            <th>#</th>
+            <th>Campanha</th>
+            <th>Valor</th>
+            <th>Data</th>
+            <th>Método</th>
+            <th>Estado</th>
 
-        </tr>
+          </tr>
 
         </thead>
 
         <tbody>
 
-        <tr *ngFor="let c of contribuicoes">
+          <tr *ngFor="let c of contribuicoes">
 
-          <td>{{ c.id }}</td>
+            <td class="fw-semibold">{{ c.id }}</td>
 
-          <td>
+            <td>
 
-            <div class="campaign">
+              <div class="d-flex align-items-center gap-2">
 
-              <div class="campaign-avatar">
-                💙
+                <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center"
+                     style="width:40px;height:40px;">
+                  💙
+                </div>
+
+                <div>
+
+                  <strong class="d-block">
+                    {{ c.campanha }}
+                  </strong>
+
+                  <small class="text-muted">
+                    EmpowerUp
+                  </small>
+
+                </div>
+
               </div>
 
-              <div>
+            </td>
 
-                <strong>{{ c.campanha }}</strong>
+            <td class="text-success fw-bold">
+              Kz {{ c.valor | number }}
+            </td>
 
-                <small>EmpowerUp</small>
+            <td class="text-muted">
+              {{ c.data }}
+            </td>
 
-              </div>
+            <td>
+              💳 {{ c.metodo }}
+            </td>
 
-            </div>
+            <td>
 
-          </td>
+              <span
+                class="badge rounded-pill"
+                [ngClass]="{
+                  'bg-success': c.estado === 'Confirmado',
+                  'bg-warning text-dark': c.estado === 'Pendente',
+                  'bg-danger': c.estado === 'Cancelado'
+                }">
 
-          <td class="money">
+                {{ c.estado }}
 
-            Kz {{ c.valor | number }}
+              </span>
 
-          </td>
+            </td>
 
-          <td>{{ c.data }}</td>
-
-          <td>
-
-            💳 {{ c.metodo }}
-
-          </td>
-
-          <td>
-
-            <span
-              class="badge"
-              [ngClass]="c.estado">
-
-              {{ c.estado }}
-
-            </span>
-
-          </td>
-
-        </tr>
+          </tr>
 
         </tbody>
 
