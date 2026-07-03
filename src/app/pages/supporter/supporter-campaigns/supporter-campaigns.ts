@@ -1,30 +1,44 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { BehaviorSubject, switchMap, map } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { BehaviorSubject, map, switchMap } from 'rxjs';
 
 import { CampaignService } from '../../../core/services/campaign.service';
 
 @Component({
   selector: 'app-supporter-campaigns',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './supporter-campaigns.html',
-  styleUrl: './supporter-campaigns.css',
+  styleUrl: './supporter-campaigns.css'
 })
 export class SupporterCampaigns {
 
-  private refresh$ = new BehaviorSubject<void>(undefined);
-
-  modalAberto = false;
-  campanhaSelecionada: any = null;
-
   private readonly IMAGE_URL = 'http://localhost:8080/uploads/';
 
+  private refresh$ = new BehaviorSubject<void>(undefined);
+
+  // Modal Detalhes
+  modalDetalhes = false;
+
+  // Modal Apoio
+  modalApoio = false;
+
+  campanhaSelecionada: any = null;
+
+  valor = 0;
+
+  paymentMethod = 'PAYPAY';
+
   campanhas$ = this.refresh$.pipe(
+
     switchMap(() =>
       this.campaignService.getActiveCampaigns()
     ),
+
     map((data: any[]) =>
       data.map(campanha => {
 
@@ -32,47 +46,126 @@ export class SupporterCampaigns {
         const arrecadado = campanha.arrecadado || 0;
 
         return {
+
           ...campanha,
 
-          // 🔥 IMAGEM CORRIGIDA
           imageUrl:
             campanha.imagemUrl ||
-            (campanha.imagem
-              ? this.IMAGE_URL + campanha.imagem
-              : 'https://picsum.photos/700/450'),
+            (
+              campanha.imagem
+                ? this.IMAGE_URL + campanha.imagem
+                : 'https://picsum.photos/700/450'
+            ),
 
-          // 🔥 PERFORMANCE
-          percentual: meta ? Math.round((arrecadado / meta) * 100) : 0,
+          percentual: meta
+            ? Math.round((arrecadado / meta) * 100)
+            : 0,
+
           restante: meta - arrecadado
+
         };
+
       })
     )
+
   );
 
   constructor(
-    private campaignService: CampaignService,
-    private router: Router
+    private campaignService: CampaignService
   ) {}
 
-  apoiar(campanha: any): void {
-    this.router.navigate(['/campanhas', campanha.id, 'apoiar']);
-  }
-
+  /**
+   * Abre modal de detalhes
+   */
   detalhes(campanha: any): void {
+
     this.campanhaSelecionada = campanha;
-    this.modalAberto = true;
+
+    this.modalDetalhes = true;
+
   }
 
-  fecharModal(): void {
-    this.modalAberto = false;
+  fecharModalDetalhes(): void {
+
+    this.modalDetalhes = false;
+
     this.campanhaSelecionada = null;
+
   }
 
+  /**
+   * Abre modal de apoio
+   */
+  apoiar(campanha: any): void {
+
+    this.campanhaSelecionada = campanha;
+
+    this.valor = 0;
+
+    this.paymentMethod = 'PAYPAY';
+
+    this.modalApoio = true;
+
+  }
+
+  fecharModalApoio(): void {
+
+    this.modalApoio = false;
+
+  }
+
+  /**
+   * Confirmar apoio
+   */
+  confirmarApoio(): void {
+
+    if (this.valor <= 0) {
+
+      return;
+
+    }
+
+    this.campaignService
+      .supportCampaign(
+        this.campanhaSelecionada.id,
+        this.valor,
+        this.paymentMethod
+      )
+      .subscribe({
+
+        next: () => {
+
+          // Fecha o modal
+          this.modalApoio = false;
+
+          // Atualiza lista
+          this.refresh();
+
+        },
+
+        error: err => {
+
+          console.error(err);
+
+        }
+
+      });
+
+  }
+
+  /**
+   * Atualizar campanhas
+   */
   refresh(): void {
+
     this.refresh$.next();
+
   }
 
   trackById(index: number, item: any): number {
+
     return item.id;
+
   }
+
 }

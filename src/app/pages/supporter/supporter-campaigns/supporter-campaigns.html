@@ -1,132 +1,308 @@
-<div class="page">
+<div class="container py-5">
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-left">
-      <span class="hero-badge">✨ Plataforma de Crowdfunding</span>
+  <div class="row align-items-center bg-primary text-white rounded-4 shadow-lg p-5 mb-5">
 
-      <h1>Faça parte de uma mudança que transforma vidas</h1>
+    <div class="col-lg-6">
 
-      <p>
-        Descubra campanhas inspiradoras, apoie projetos sociais e ajude
-        organizações a alcançarem seus objetivos através da EmpowerUp.
+      <span class="badge bg-light text-primary fs-6 px-3 py-2 mb-3">
+        ✨ Plataforma de Crowdfunding
+      </span>
+
+      <h1 class="display-5 fw-bold">
+        Faça parte de uma mudança que transforma vidas
+      </h1>
+
+      <p class="lead my-4">
+        Descubra campanhas inspiradoras, apoie projetos sociais e ajude organizações
+        a alcançarem seus objetivos através da EmpowerUp.
       </p>
 
-      <div class="hero-buttons">
-        <button class="btn-primary">🚀 Explorar campanhas</button>
-        <button class="btn-secondary">❤️ Começar a apoiar</button>
+      <div class="d-flex flex-wrap gap-3">
+
+        <button class="btn btn-light btn-lg">
+          🚀 Explorar campanhas
+        </button>
+
+        <button class="btn btn-outline-light btn-lg">
+          ❤️ Começar a apoiar
+        </button>
+
       </div>
+
     </div>
 
-    <div class="hero-right">
-      <img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?w=900" />
+    <div class="col-lg-6 text-center mt-4 mt-lg-0">
+
+      <img
+        src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?w=900"
+        class="img-fluid rounded-4 shadow">
+
     </div>
-  </section>
+
+  </div>
 
   <!-- TÍTULO -->
-  <section class="section-title">
-    <h2>Campanhas em Destaque</h2>
-    <p>Conheça iniciativas verificadas que estão mudando vidas.</p>
-  </section>
+
+  <div class="text-center mb-5">
+
+    <h2 class="fw-bold">
+      Campanhas em Destaque
+    </h2>
+
+    <p class="text-muted">
+      Conheça iniciativas verificadas que estão mudando vidas.
+    </p>
+
+  </div>
 
   <!-- STREAM -->
+
   <ng-container *ngIf="campanhas$ | async as campanhas">
 
-    <!-- LOADING (IMPORTANTE: sem isso vai ficar sempre "preso") -->
-    <div class="loading" *ngIf="!campanhas">
-      Carregando campanhas...
+    <div
+      class="text-center py-5"
+      *ngIf="!campanhas">
+
+      <div class="spinner-border text-primary"></div>
+
+      <p class="mt-3">
+
+        Carregando campanhas...
+
+      </p>
+
     </div>
 
-    <!-- VAZIO -->
-    <div class="empty" *ngIf="campanhas && campanhas.length === 0">
+    <div
+      class="alert alert-info text-center"
+      *ngIf="campanhas && campanhas.length===0">
+
       Nenhuma campanha disponível no momento.
+
     </div>
 
-    <!-- LISTA -->
-    <div class="cards" *ngIf="campanhas && campanhas.length > 0">
+    <!-- CARDS -->
+
+    <div
+      class="row g-4"
+      *ngIf="campanhas && campanhas.length>0">
 
       <div
-        class="card"
+        class="col-lg-4 col-md-6"
         *ngFor="let campanha of campanhas; trackBy: trackById">
 
-        <!-- IMAGEM -->
-        <div class="image">
-          <img [src]="campanha.imageUrl" />
-          <span class="badge">⭐ Em Destaque</span>
+        <div class="card h-100 shadow-sm border-0 rounded-4">
+
+          <div class="position-relative">
+
+            <img
+              [src]="campanha.imageUrl"
+              class="card-img-top"
+              style="height:220px;object-fit:cover">
+
+            <span class="badge bg-success position-absolute top-0 start-0 m-3">
+
+              ⭐ Em Destaque
+
+            </span>
+
+          </div>
+
+          <div class="card-body">
+
+            <div class="d-flex justify-content-between text-muted small mb-2">
+
+              <span>
+
+                📂 {{ campanha.categoria || 'Campanha Social' }}
+
+              </span>
+
+              <span>
+
+                📍 {{ campanha.localizacao || 'Angola' }}
+
+              </span>
+
+            </div>
+
+            <h5 class="fw-bold">
+
+              {{ campanha.titulo }}
+
+            </h5>
+
+            <p class="text-muted">
+
+              {{ campanha.descricao }}
+
+            </p>
+
+            <div class="d-flex align-items-center mb-3">
+
+              <img
+                src="https://i.pravatar.cc/100?img=12"
+                class="rounded-circle me-3"
+                width="45"
+                height="45">
+
+              <div>
+
+                <div class="fw-semibold">
+
+                  {{ campanha.organizador || 'EmpowerUp' }}
+
+                </div>
+
+                <small class="text-muted">
+
+                  Organizador
+
+                </small>
+
+              </div>
+
+            </div>
+
+            <!-- Progress -->
+
+            <div class="d-flex justify-content-between small fw-semibold mb-2">
+
+              <span>
+
+                💰 Kz {{ campanha.arrecadado | number }}
+
+              </span>
+
+              <span>
+
+                {{ campanha.percentual }}%
+
+              </span>
+
+            </div>
+
+            <div class="progress mb-3">
+
+              <div
+                class="progress-bar"
+                [style.width.%]="campanha.percentual">
+
+              </div>
+
+            </div>
+
+            <!-- Stats -->
+
+            <div class="row g-2 text-center">
+
+              <div class="col-4">
+
+                <div class="bg-light rounded-3 p-2">
+
+                  <small class="text-muted d-block">
+
+                    Meta
+
+                  </small>
+
+                  <strong>
+
+                    {{ campanha.meta | number }}
+
+                  </strong>
+
+                </div>
+
+              </div>
+
+              <div class="col-4">
+
+                <div class="bg-light rounded-3 p-2">
+
+                  <small class="text-muted d-block">
+
+                    Arrecadado
+
+                  </small>
+
+                  <strong>
+
+                    {{ campanha.arrecadado | number }}
+
+                  </strong>
+
+                </div>
+
+              </div>
+
+              <div class="col-4">
+
+                <div class="bg-light rounded-3 p-2">
+
+                  <small class="text-muted d-block">
+
+                    Falta
+
+                  </small>
+
+                  <strong>
+
+                    {{ campanha.restante | number }}
+
+                  </strong>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="card-footer bg-white border-0">
+
+            <div class="d-flex justify-content-between text-muted small mb-3">
+
+              <span>
+
+                ❤️ {{ campanha.totalApoiadores || 0 }} apoiadores
+
+              </span>
+
+              <span>
+
+                📅 {{ campanha.diasRestantes || 0 }} dias
+
+              </span>
+
+            </div>
+
+            <div class="d-grid gap-2">
+
+              <button
+                class="btn btn-outline-primary"
+                (click)="detalhes(campanha)">
+
+                👁 Ver detalhes
+
+              </button>
+
+              <button
+                class="btn btn-primary"
+                (click)="apoiar(campanha)">
+
+                💙 Apoiar Campanha
+
+              </button>
+
+            </div>
+
+          </div>
+
         </div>
 
-        <!-- CONTEÚDO -->
-        <div class="content">
-
-          <div class="top-info">
-            <span>📂 {{ campanha.categoria || 'Campanha Social' }}</span>
-            <span>📍 {{ campanha.localizacao || 'Angola' }}</span>
-          </div>
-
-          <h3>{{ campanha.titulo }}</h3>
-
-          <p>{{ campanha.descricao }}</p>
-
-          <!-- ORGANIZADOR -->
-          <div class="organizer">
-            <img src="https://i.pravatar.cc/100?img=12" />
-
-            <div>
-              <strong>{{ campanha.organizador || 'EmpowerUp' }}</strong>
-              <small>Organizador</small>
-            </div>
-          </div>
-
-          <!-- PROGRESSO -->
-          <div class="progress-info">
-            <span>💰 Kz {{ campanha.arrecadado | number }}</span>
-            <span>{{ campanha.percentual }}%</span>
-          </div>
-
-          <div class="progress">
-            <div class="bar"
-                 [style.width.%]="campanha.percentual">
-            </div>
-          </div>
-
-          <!-- STATS -->
-          <div class="stats">
-
-            <div>
-              <strong>Kz {{ campanha.meta | number }}</strong>
-              <span>Meta</span>
-            </div>
-
-            <div>
-              <strong>Kz {{ campanha.arrecadado | number }}</strong>
-              <span>Arrecadado</span>
-            </div>
-
-            <div>
-              <strong>Kz {{ campanha.restante | number }}</strong>
-              <span>Falta</span>
-            </div>
-
-          </div>
-
-          <!-- FOOTER -->
-          <div class="footer-card">
-            <span>❤️ {{ campanha.totalApoiadores || 0 }} apoiadores</span>
-            <span>📅 {{ campanha.diasRestantes || 0 }} dias restantes</span>
-          </div>
-
-          <!-- BOTÕES -->
-          <div class="buttons">
-            <button class="btn-details" (click)="detalhes(campanha)">
-              👁 Ver detalhes
-            </button>
-
-            <button class="btn-support" (click)="apoiar(campanha)">
-              💙 Apoiar Campanha
-            </button>
-          </div>
-
-        </div>
       </div>
 
     </div>
@@ -135,36 +311,235 @@
 
 </div>
 
-<!-- MODAL -->
-<div class="modal-overlay" *ngIf="modalAberto">
+<!-- =========================
+     MODAL DETALHES
+========================== -->
 
-  <div class="modal-container">
+<div
+  class="modal fade show d-block"
+  *ngIf="modalDetalhes">
 
-    <button class="btn-close" (click)="fecharModal()">✕</button>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
 
-    <div class="modal-image">
-      <img [src]="campanhaSelecionada?.imageUrl" />
-    </div>
+    <div class="modal-content border-0 shadow">
 
-    <div class="modal-content">
+      <div class="modal-header">
 
-      <h2>{{ campanhaSelecionada?.titulo }}</h2>
+        <h4 class="modal-title fw-bold">
 
-      <p>{{ campanhaSelecionada?.descricao }}</p>
+          {{ campanhaSelecionada?.titulo }}
 
-      <div class="progress-info">
-        <span>💰 Kz {{ campanhaSelecionada?.arrecadado | number }}</span>
-        <span>{{ campanhaSelecionada?.percentual }}%</span>
+        </h4>
+
+        <button
+          class="btn-close"
+          (click)="fecharModalDetalhes()">
+        </button>
+
       </div>
 
-      <div class="progress">
-        <div class="bar"
-             [style.width.%]="campanhaSelecionada?.percentual">
+      <div class="modal-body">
+
+        <img
+          [src]="campanhaSelecionada?.imageUrl"
+          class="img-fluid rounded mb-4 w-100"
+          style="height:320px;object-fit:cover">
+
+        <p class="text-muted">
+
+          {{ campanhaSelecionada?.descricao }}
+
+        </p>
+
+        <div class="d-flex justify-content-between fw-semibold mb-2">
+
+          <span>
+
+            💰 Kz {{ campanhaSelecionada?.arrecadado | number }}
+
+          </span>
+
+          <span>
+
+            {{ campanhaSelecionada?.percentual }}%
+
+          </span>
+
         </div>
+
+        <div class="progress mb-4">
+
+          <div
+            class="progress-bar"
+            [style.width.%]="campanhaSelecionada?.percentual">
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button
+          class="btn btn-outline-secondary"
+          (click)="fecharModalDetalhes()">
+
+          Fechar
+
+        </button>
+
+        <button
+          class="btn btn-primary"
+          (click)="apoiar(campanhaSelecionada)">
+
+          💙 Apoiar Campanha
+
+        </button>
+
       </div>
 
     </div>
 
   </div>
 
+</div>
+
+<div
+  class="modal-backdrop fade show"
+  *ngIf="modalDetalhes">
+</div>
+
+<!-- =========================
+     MODAL APOIO
+========================== -->
+
+<div
+  class="modal fade show d-block"
+  *ngIf="modalApoio">
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content border-0 shadow">
+
+      <div class="modal-header">
+
+        <h4 class="modal-title">
+
+          💙 Apoiar Campanha
+
+        </h4>
+
+        <button
+          class="btn-close"
+          (click)="fecharModalApoio()">
+        </button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <div class="text-center mb-4">
+
+          <img
+            [src]="campanhaSelecionada?.imageUrl"
+            class="rounded mb-3"
+            style="width:100%;height:180px;object-fit:cover;">
+
+          <h5 class="fw-bold">
+
+            {{ campanhaSelecionada?.titulo }}
+
+          </h5>
+
+          <p class="text-muted">
+
+            {{ campanhaSelecionada?.descricao }}
+
+          </p>
+
+        </div>
+
+        <div class="mb-3">
+
+          <label class="form-label">
+
+            Valor da contribuição
+
+          </label>
+
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="valor"
+            placeholder="Ex: 5000">
+
+        </div>
+
+        <div class="mb-3">
+
+          <label class="form-label">
+
+            Método de Pagamento
+
+          </label>
+
+          <select
+            class="form-select"
+            [(ngModel)]="paymentMethod">
+
+            <option value="PAYPAY">
+
+              PayPay
+
+            </option>
+
+            <option value="MULTICAIXA_EXPRESS">
+
+              Multicaixa Express
+
+            </option>
+
+            <option value="REFERENCIA">
+
+              Referência Bancária
+
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button
+          class="btn btn-outline-secondary"
+          (click)="fecharModalApoio()">
+
+          Cancelar
+
+        </button>
+
+        <button
+          class="btn btn-primary"
+          (click)="confirmarApoio()"
+          [disabled]="valor <= 0">
+
+          Confirmar Apoio
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div
+  class="modal-backdrop fade show"
+  *ngIf="modalApoio">
 </div>
