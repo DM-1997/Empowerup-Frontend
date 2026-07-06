@@ -14,17 +14,17 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // 🔵 REGISTO
-  register(data: any) {
-    return this.http.post(`${this.baseUrl}/register`, data);
-  }
-
   // 🔵 LOGIN
   login(data: any) {
     return this.http.post(`${this.baseUrl}/login`, data);
   }
 
-  // 🔐 SET USER
+  // 🔐 REGISTO
+  register(data: any) {
+    return this.http.post(`${this.baseUrl}/register`, data);
+  }
+
+  // 🔐 GUARDA USER
   setUser(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
     this.userSubject.next(user);
@@ -36,16 +36,19 @@ export class AuthService {
     return user ? JSON.parse(user) : null;
   }
 
-  // 🔐 ID
+  // 🔐 ID (ROBUSTO)
   getUserId(): number | null {
     const user = this.getUser();
-    return user ? user.id : null;
+
+    console.log('USER FROM STORAGE:', user);
+
+    return user?.id ?? user?.user?.id ?? user?.data?.id ?? null;
   }
 
   // 🔐 ROLE
   getUserRole(): string | null {
     const user = this.getUser();
-    return user ? user.role : null;
+    return user?.role ?? null;
   }
 
   // 🚪 LOGOUT
@@ -54,19 +57,18 @@ export class AuthService {
     this.userSubject.next(null);
   }
 
-  // 🔐 LOGIN STATUS (COM ACTIVE CHECK)
+  // 🔐 LOGIN STATUS
   isLoggedIn(): boolean {
     const user = this.getUser();
     return user !== null && user.active === true;
   }
 
-  // 🚨 VERIFICAR SE USER AINDA ESTÁ ATIVO
+  // 🔐 ACTIVE CHECK
   isActiveUser(): boolean {
     const user = this.getUser();
     return user?.active === true;
   }
 
-  // 🔥 FUNÇÃO IMPORTANTE: FORÇAR LOGOUT SE INATIVO
   validateSession() {
     const user = this.getUser();
 

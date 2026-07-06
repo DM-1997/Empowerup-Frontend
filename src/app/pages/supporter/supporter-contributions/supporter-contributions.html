@@ -20,11 +20,7 @@
     </div>
 
     <div class="col-lg-4 text-center mt-4 mt-lg-0">
-
-      <div class="display-1">
-        💙
-      </div>
-
+      <div class="display-1">💙</div>
     </div>
 
   </div>
@@ -35,17 +31,15 @@
     <div class="col-md-4">
 
       <div class="card border-0 shadow-sm h-100 text-center">
-
         <div class="card-body">
 
           <h6 class="text-muted">Total de Contribuições</h6>
 
           <h2 class="fw-bold text-primary">
-            {{ contribuicoes.length }}
+            {{ totalContribuicoes$ | async }}
           </h2>
 
         </div>
-
       </div>
 
     </div>
@@ -53,19 +47,15 @@
     <div class="col-md-4">
 
       <div class="card border-0 shadow-sm h-100 text-center">
-
         <div class="card-body">
 
           <h6 class="text-muted">Total Investido</h6>
 
           <h2 class="fw-bold text-success">
-
-            Kz {{ contribuicoes.reduce((t, c) => t + c.amount, 0) | number }}
-
+            Kz {{ totalInvestido$ | async | number }}
           </h2>
 
         </div>
-
       </div>
 
     </div>
@@ -73,17 +63,15 @@
     <div class="col-md-4">
 
       <div class="card border-0 shadow-sm h-100 text-center">
-
         <div class="card-body">
 
           <h6 class="text-muted">Campanhas Apoiadas</h6>
 
           <h2 class="fw-bold text-primary">
-            {{ contribuicoes.length }}
+            {{ totalCampanhas$ | async }}
           </h2>
 
         </div>
-
       </div>
 
     </div>
@@ -98,7 +86,7 @@
       <h5 class="mb-0 fw-bold">Histórico</h5>
 
       <span class="text-muted">
-        {{ contribuicoes.length }} registros
+        {{ totalContribuicoes$ | async }} registros
       </span>
 
     </div>
@@ -110,26 +98,24 @@
         <thead class="table-light">
 
           <tr>
-
             <th>#</th>
             <th>Campanha</th>
             <th>Valor</th>
             <th>Data</th>
             <th>Método</th>
             <th>Estado</th>
-
           </tr>
 
         </thead>
 
         <tbody>
 
-          <tr *ngFor="let c of contribuicoes">
+          <!-- 🔥 async pipe aqui -->
+          <tr *ngFor="let c of (contribuicoes$ | async)">
 
             <td class="fw-semibold">{{ c.id }}</td>
 
             <td>
-
               <div class="d-flex align-items-center gap-2">
 
                 <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center"
@@ -138,19 +124,11 @@
                 </div>
 
                 <div>
-
-                  <strong class="d-block">
-                    {{ c.campaign }}
-                  </strong>
-
-                  <small class="text-muted">
-                    EmpowerUp
-                  </small>
-
+                  <strong class="d-block">{{ c.campaign }}</strong>
+                  <small class="text-muted">EmpowerUp</small>
                 </div>
 
               </div>
-
             </td>
 
             <td class="text-success fw-bold">
@@ -162,23 +140,38 @@
             </td>
 
             <td>
-              💳 {{ c.paymentMethod }}
+              <span *ngIf="c.paymentMethod === 'TRANSFERENCIA'">💳 Transferência</span>
+              <span *ngIf="c.paymentMethod === 'CARTAO'">💳 Cartão</span>
+              <span *ngIf="c.paymentMethod === 'PAYPAL'">💳 PayPal</span>
+
+              <span *ngIf="c.paymentMethod !== 'TRANSFERENCIA'
+                         && c.paymentMethod !== 'CARTAO'
+                         && c.paymentMethod !== 'PAYPAL'">
+                💳 {{ c.paymentMethod }}
+              </span>
             </td>
 
             <td>
-
-              <span
-                class="badge rounded-pill"
-                [ngClass]="{
-                  'bg-success': c.status === 'CONFIRMED',
-                  'bg-warning text-dark': c.status === 'PENDING',
-                  'bg-danger': c.status === 'CANCELLED'
-                }">
+              <span class="badge rounded-pill"
+                    [ngClass]="{
+                      'bg-success': c.status === 'PAGO',
+                      'bg-warning text-dark': c.status === 'PENDENTE',
+                      'bg-danger': c.status === 'CANCELADO'
+                    }">
 
                 {{ c.status }}
 
               </span>
+            </td>
 
+          </tr>
+
+          <!-- EMPTY STATE -->
+          <tr *ngIf="(contribuicoes$ | async)?.length === 0">
+
+            <td colspan="6" class="text-center py-5 text-muted">
+              <h5>Nenhuma contribuição encontrada.</h5>
+              <p class="mb-0">Você ainda não apoiou nenhuma campanha.</p>
             </td>
 
           </tr>

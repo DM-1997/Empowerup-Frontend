@@ -3,19 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Contribution {
-
   id: number;
-
   campaign: string;
-
   amount: number;
-
   contributionDate: string;
-
   paymentMethod: string;
-
   status: string;
-
 }
 
 @Injectable({
@@ -29,10 +22,12 @@ export class ContributionService {
 
   findBySupporter(supporterId: number): Observable<Contribution[]> {
 
+    if (!supporterId) {
+      throw new Error('Supporter ID inválido');
+    }
+
     return this.http.get<Contribution[]>(
       `${this.api}/supporter/${supporterId}`
     );
-
   }
-
 }

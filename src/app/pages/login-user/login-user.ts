@@ -31,15 +31,20 @@ export class LoginUser {
 
       next: (res: any) => {
 
-        console.log('Login OK:', res);
+        console.log('LOGIN RESPONSE:', res);
 
-        // Guarda o utilizador
-        this.authService.setUser(res);
+        // 🔥 Extrai user corretamente (flexível para vários backends)
+        const user = res.user || res.data || res;
+
+        console.log('USER EXTRAÍDO:', user);
+
+        // 🔐 Guarda no localStorage
+        this.authService.setUser(user);
 
         alert('Login feito com sucesso!');
 
-        // Obtém o perfil
-        const role = this.authService.getUserRole();
+        // 🔥 Usa diretamente o user já extraído (mais seguro)
+        const role = user.role || this.authService.getUserRole();
 
         switch (role) {
 
@@ -72,5 +77,4 @@ export class LoginUser {
     });
 
   }
-
 }

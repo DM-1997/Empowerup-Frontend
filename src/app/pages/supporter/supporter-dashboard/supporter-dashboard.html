@@ -1,3 +1,4 @@
+
 <div class="container py-5">
 
   <!-- HERO -->
@@ -24,9 +25,13 @@
           🚀 Explorar Campanhas
         </button>
 
-        <button class="btn btn-outline-light fw-semibold px-4 py-2 rounded-3">
-          ❤️ Minhas Contribuições
-        </button>
+<button
+  class="btn btn-outline-light fw-semibold px-4 py-2 rounded-3"
+  [routerLink]="['/supporter/contributions']">
+
+  ❤️ Minhas Contribuições
+
+</button>
 
       </div>
 
@@ -46,6 +51,7 @@
   <!-- STATS -->
   <div class="row g-4 mb-5">
 
+    <!-- CAMPANHAS -->
     <div class="col-md-4">
 
       <div class="card border-0 shadow-sm h-100">
@@ -61,7 +67,9 @@
 
             <h6 class="text-muted mb-1">Campanhas Apoiadas</h6>
 
-            <h3 class="fw-bold mb-0">{{ totalCampanhas }}</h3>
+            <h3 class="fw-bold mb-0">
+              {{ totalCampanhas$ | async }}
+            </h3>
 
             <small class="text-muted">Projetos apoiados</small>
 
@@ -73,6 +81,7 @@
 
     </div>
 
+    <!-- TOTAL INVESTIDO -->
     <div class="col-md-4">
 
       <div class="card border-0 shadow-sm h-100">
@@ -89,7 +98,7 @@
             <h6 class="text-muted mb-1">Total Contribuído</h6>
 
             <h3 class="fw-bold mb-0">
-              Kz {{ totalContribuido | number }}
+              Kz {{ totalContribuido$ | async | number }}
             </h3>
 
             <small class="text-muted">Valor investido</small>
@@ -102,6 +111,7 @@
 
     </div>
 
+    <!-- ÚLTIMA CAMPANHA -->
     <div class="col-md-4">
 
       <div class="card border-0 shadow-sm h-100">
@@ -118,7 +128,7 @@
             <h6 class="text-muted mb-1">Último Apoio</h6>
 
             <h3 class="fw-bold mb-0">
-              {{ ultimaCampanha }}
+              {{ ultimaCampanha$ | async }}
             </h3>
 
             <small class="text-muted">Campanha recente</small>
@@ -147,9 +157,13 @@
         Continue apoiando campanhas e ajude mais pessoas a realizarem os seus sonhos.
       </p>
 
-      <button class="btn btn-primary px-4 py-2 rounded-3 fw-semibold mt-3">
-        Ver Campanhas
-      </button>
+<button
+  class="btn btn-light text-primary fw-semibold px-4 py-2 rounded-3"
+  [routerLink]="['/supporter/campaigns']">
+
+  🚀 Ver Campanhas
+
+</button>
 
     </div>
 
