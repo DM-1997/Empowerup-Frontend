@@ -60,7 +60,7 @@
 
           <h2 class="fw-bold text-success">
 
-            Kz {{ contribuicoes.reduce((t,c)=>t+c.valor,0) | number }}
+            Kz {{ contribuicoes.reduce((t, c) => t + c.amount, 0) | number }}
 
           </h2>
 
@@ -140,7 +140,7 @@
                 <div>
 
                   <strong class="d-block">
-                    {{ c.campanha }}
+                    {{ c.campaign }}
                   </strong>
 
                   <small class="text-muted">
@@ -154,15 +154,15 @@
             </td>
 
             <td class="text-success fw-bold">
-              Kz {{ c.valor | number }}
+              Kz {{ c.amount | number }}
             </td>
 
             <td class="text-muted">
-              {{ c.data }}
+              {{ c.contributionDate | date:'dd/MM/yyyy' }}
             </td>
 
             <td>
-              💳 {{ c.metodo }}
+              💳 {{ c.paymentMethod }}
             </td>
 
             <td>
@@ -170,12 +170,12 @@
               <span
                 class="badge rounded-pill"
                 [ngClass]="{
-                  'bg-success': c.estado === 'Confirmado',
-                  'bg-warning text-dark': c.estado === 'Pendente',
-                  'bg-danger': c.estado === 'Cancelado'
+                  'bg-success': c.status === 'CONFIRMED',
+                  'bg-warning text-dark': c.status === 'PENDING',
+                  'bg-danger': c.status === 'CANCELLED'
                 }">
 
-                {{ c.estado }}
+                {{ c.status }}
 
               </span>
 

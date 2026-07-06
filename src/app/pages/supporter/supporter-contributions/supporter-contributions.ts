@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../core/services/auth.service';
+import {
+  Contribution,
+  ContributionService
+} from '../../../core/services/contribution.service';
 
 @Component({
   selector: 'app-supporter-contributions',
@@ -8,33 +13,41 @@ import { CommonModule } from '@angular/common';
   templateUrl: './supporter-contributions.html',
   styleUrl: './supporter-contributions.css',
 })
-export class SupporterContributions {
+export class SupporterContributions implements OnInit {
 
-  contribuicoes = [
-    {
-      id: 1,
-      campanha: 'Água para Todos',
-      valor: 50000,
-      data: '10/07/2025',
-      metodo: 'Transferência',
-      estado: 'Confirmado'
-    },
-    {
-      id: 2,
-      campanha: 'Construção de Escola',
-      valor: 150000,
-      data: '20/07/2025',
-      metodo: 'Cartão',
-      estado: 'Confirmado'
-    },
-    {
-      id: 3,
-      campanha: 'Centro de Saúde',
-      valor: 25000,
-      data: '01/08/2025',
-      metodo: 'PayPal',
-      estado: 'Pendente'
+  contribuicoes: Contribution[] = [];
+
+  constructor(
+    private contributionService: ContributionService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+
+    const supporterId = this.authService.getUserId();
+
+    if (!supporterId) {
+      return;
     }
-  ];
+
+    this.contributionService
+      .findBySupporter(supporterId)
+      .subscribe({
+
+        next: (data) => {
+
+          this.contribuicoes = data;
+
+        },
+
+        error: (err) => {
+
+          console.error(err);
+
+        }
+
+      });
+
+  }
 
 }

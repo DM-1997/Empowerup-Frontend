@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,16 @@ export class CampaignService {
 
   private apiUrl = 'http://localhost:8080/api/campaigns';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
   getAllCampaigns(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
 
-  getMyCampaigns(userId: number) {
+  getMyCampaigns(userId: number): Observable<any[]> {
     return this.http.get<any[]>(
       `${this.apiUrl}/my?userId=${userId}`
     );
@@ -39,7 +43,7 @@ export class CampaignService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  // ✅ SUPPORT CORRIGIDO
+  // ✅ Apoiar campanha
   supportCampaign(
     id: number,
     valor: number,
@@ -47,8 +51,9 @@ export class CampaignService {
   ): Observable<any> {
 
     const body = {
-      valor,
-      paymentMethod
+      supporterId: this.authService.getUserId(),
+      valor: valor,
+      paymentMethod: paymentMethod
     };
 
     return this.http.post(
@@ -57,7 +62,7 @@ export class CampaignService {
     );
   }
 
-  // ✅ CONFIRMAR PAGAMENTO
+  // ✅ Confirmar pagamento
   confirmPayment(contributionId: number): Observable<any> {
     return this.http.post(
       `${this.apiUrl}/contributions/${contributionId}/confirm`,
@@ -65,9 +70,10 @@ export class CampaignService {
     );
   }
 
-getCampaignById(id: number): Observable<any> {
-  return this.http.get(
-    `${this.apiUrl}/${id}?t=${Date.now()}`
-  );
-}
+  getCampaignById(id: number): Observable<any> {
+    return this.http.get(
+      `${this.apiUrl}/${id}?t=${Date.now()}`
+    );
+  }
+
 }
