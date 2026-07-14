@@ -7,23 +7,29 @@
   </div>
 
   <!-- CARDS -->
-  <div class="stats-grid">
+  <div class="stats-grid" *ngIf="stats$ | async as stats">
 
     <div class="card">
-      <h2>{{ totalUsers }}</h2>
+      <h2>{{ stats.totalUsers }}</h2>
       <p>Utilizadores</p>
     </div>
 
     <div class="card">
-      <h2>{{ totalCampaigns }}</h2>
+      <h2>{{ stats.totalCampaigns }}</h2>
       <p>Campanhas</p>
     </div>
 
     <div class="card">
-      <h2>kz {{ totalRaised }}</h2>
+      <h2>kz {{ stats.totalRaised | number }}</h2>
       <p>Total Arrecadado</p>
     </div>
 
+  </div>
+
+  <!-- LOADING STATE (opcional) -->
+  <div *ngIf="!(stats$ | async)" class="text-center py-4">
+    <div class="spinner-border text-primary"></div>
+    <p>Carregando dados...</p>
   </div>
 
   <!-- AÇÕES -->

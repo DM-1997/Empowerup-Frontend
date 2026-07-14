@@ -1,17 +1,21 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { AdminNavbar } from "../../../shared/admin-navbar/admin-navbar";
+import { AdminDashboardService, AdminDashboardStats } from '../../../core/services/admin-dashboard.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [AdminNavbar],
+  imports: [CommonModule, AdminNavbar],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css',
 })
 export class AdminDashboard {
 
-  totalUsers = 120;
-  totalCampaigns = 45;
-  totalRaised = 250000;
+  stats$!: Observable<AdminDashboardStats>;
 
+  constructor(private adminDashboardService: AdminDashboardService) {
+    this.stats$ = this.adminDashboardService.getStats();
+  }
 }
