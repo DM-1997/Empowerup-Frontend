@@ -6,17 +6,49 @@
   <!-- HEADER PERFIL -->
   <div class="card shadow-sm p-4 text-center">
 
-    <!-- AVATAR -->
-    <img
-      [src]="usuario.avatar || 'https://i.pravatar.cc/150?img=12'"
-      class="rounded-circle mx-auto mb-3"
-      width="120"
-      height="120"
-      alt="Avatar"
-    />
+    <!-- FOTO -->
+    <div class="position-relative d-inline-block mx-auto">
+
+      <img
+        [src]="usuario.avatar || 'https://i.pravatar.cc/150?img=12'"
+        class="rounded-circle border border-3 border-primary"
+        width="140"
+        height="140"
+        style="object-fit: cover;"
+        alt="Avatar"
+      />
+
+      <!-- BOTÃO ALTERAR FOTO -->
+      <label
+        for="fotoPerfil"
+        class="btn btn-primary btn-sm rounded-circle position-absolute"
+        style="
+          bottom:0;
+          right:0;
+          width:40px;
+          height:40px;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          cursor:pointer;
+        "
+        title="Alterar foto"
+      >
+        📷
+      </label>
+
+      <input
+        id="fotoPerfil"
+        type="file"
+        accept="image/*"
+        hidden
+        (change)="selecionarFoto($event)"
+      />
+
+    </div>
 
     <!-- NOME -->
-    <h2 class="fw-bold">
+    <h2 class="fw-bold mt-3">
       {{ usuario.nome }}
     </h2>
 
@@ -31,7 +63,7 @@
   <div class="row text-center mt-4">
 
     <!-- CAMPANHAS CRIADAS -->
-    <div class="col-md-6">
+    <div class="col-md-6 mb-3">
 
       <div class="card p-3 shadow-sm">
 
@@ -48,7 +80,7 @@
     </div>
 
     <!-- CAMPANHAS APOIADAS -->
-    <div class="col-md-6">
+    <div class="col-md-6 mb-3">
 
       <div class="card p-3 shadow-sm">
 
@@ -67,20 +99,22 @@
   </div>
 
   <!-- AÇÕES -->
-  <div class="d-flex justify-content-center gap-3 mt-4">
+  <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
 
     <button
       class="btn btn-primary"
-      routerLink="/criar-campanha"
-    >
+      routerLink="/criar-campanha">
+
       Criar Nova Campanha
+
     </button>
 
     <button
       class="btn btn-outline-dark"
-      routerLink="/minhas-campanhas"
-    >
+      routerLink="/minhas-campanhas">
+
       Ver Minhas Campanhas
+
     </button>
 
   </div>

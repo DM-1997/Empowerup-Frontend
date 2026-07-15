@@ -17,13 +17,12 @@ export class Perfil {
 
   usuario$!: Observable<any>;
 
+  private userId!: number;
+
   constructor(
     private userService: UserService,
     private authService: AuthService
   ) {
-
-    console.log('PERFIL CARREGADO');
-
     this.loadProfile();
   }
 
@@ -33,15 +32,43 @@ export class Perfil {
 
     if (!user?.id) {
 
-      console.error('Usuário não encontrado');
-
       this.usuario$ = of(null);
 
       return;
+
     }
 
-    console.log('BUSCANDO PERFIL');
+    this.userId = user.id;
 
-    this.usuario$ = this.userService.getMyProfile(user.id);
+    this.usuario$ =
+      this.userService.getMyProfile(user.id);
+
   }
+
+  selecionarFoto(event: any) {
+
+    const file = event.target.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    this.userService
+      .uploadAvatar(this.userId, file)
+      .subscribe({
+
+        next: () => {
+
+          this.loadProfile();
+
+          alert('Foto atualizada com sucesso!');
+
+        },
+
+        error: err => console.error(err)
+
+      });
+
+  }
+
 }
