@@ -22,40 +22,83 @@ export class AdminCampaigns {
 
   campanhaSelecionada: any = {};
 
-  constructor(private adminCampaignService: AdminCampaignService){}
+  constructor(
+    private adminCampaignService: AdminCampaignService
+  ) {}
 
-  abrirDetalhes(campanha:any){
+  abrirDetalhes(campanha: any): void {
 
-    this.campanhaSelecionada = {...campanha};
+    console.log('Campanha selecionada:', campanha);
+    console.log('Video URL:', campanha.videoUrl);
+
+    // Caso o backend devolva apenas o nome do ficheiro,
+    // descomente as linhas abaixo.
+
+    /*
+    if (
+      campanha.videoUrl &&
+      !campanha.videoUrl.startsWith('http')
+    ) {
+      campanha.videoUrl =
+        'http://localhost:8080/uploads/' + campanha.videoUrl;
+    }
+    */
+
+    this.campanhaSelecionada = { ...campanha };
 
     this.modalAberto = true;
-
   }
 
-  fecharModal(){
+  fecharModal(): void {
 
     this.modalAberto = false;
 
+    this.campanhaSelecionada = {};
   }
 
-  approveCampaign(id:number){
+  approveCampaign(id: number): void {
 
     this.adminCampaignService.approveCampaign(id).subscribe({
-      next:()=>this.refresh$.next(),
-      error:err=>console.error(err)
+
+      next: () => {
+
+        this.refresh$.next();
+
+        if (this.modalAberto) {
+          this.fecharModal();
+        }
+
+      },
+
+      error: err => console.error(err)
+
     });
 
   }
 
-  deleteCampaign(id:number){
+  deleteCampaign(id: number): void {
 
-    if(!confirm("Deseja eliminar esta campanha?")){
+    if (!confirm('Deseja eliminar esta campanha?')) {
       return;
     }
 
     this.adminCampaignService.deleteCampaign(id).subscribe({
-      next:()=>this.refresh$.next(),
-      error:err=>console.error(err)
+
+      next: () => {
+
+        this.refresh$.next();
+
+        if (
+          this.campanhaSelecionada &&
+          this.campanhaSelecionada.id === id
+        ) {
+          this.fecharModal();
+        }
+
+      },
+
+      error: err => console.error(err)
+
     });
 
   }

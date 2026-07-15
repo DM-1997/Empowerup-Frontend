@@ -11,12 +11,39 @@
 
     <!-- IMAGEM -->
     <div class="image-wrapper">
-      <img [src]="campaign.imagemUrl || 'https://picsum.photos/800/400'" />
+
+      <img
+        [src]="campaign.imagemUrl || 'https://picsum.photos/800/400'">
 
       <div class="overlay">
-        <span class="badge">Campanha ativa</span>
+        <span class="badge">
+          Campanha ativa
+        </span>
       </div>
+
     </div>
+
+<!-- VÍDEO -->
+<div class="video-wrapper" *ngIf="campaign.videoUrl as videoUrl">
+
+  <h3 class="section-title">
+    Vídeo da campanha
+  </h3>
+
+  <video
+    class="campaign-video"
+    [attr.src]="videoUrl"
+    controls
+    controlsList="nodownload"
+    preload="metadata"
+    playsinline
+    width="100%">
+
+    O seu navegador não suporta vídeo.
+
+  </video>
+
+</div>
 
     <!-- CONTEÚDO -->
     <div class="content">
@@ -31,28 +58,38 @@
       <div class="progress-section">
 
         <div class="progress-header">
-          <span>Progresso da campanha</span>
+
+          <span>
+            Progresso da campanha
+          </span>
 
           <span class="percent">
+
             {{
               campaign.valorAlvo
                 ? ((campaign.valorArrecadado / campaign.valorAlvo) * 100
                   | number:'1.0-0')
                 : 0
             }}%
+
           </span>
+
         </div>
 
         <div class="progress-bar">
+
           <div
             class="progress-fill"
             [style.width.%]="campaign.valorAlvo
               ? (campaign.valorArrecadado / campaign.valorAlvo) * 100
               : 0">
+
           </div>
+
         </div>
 
         <div class="values">
+
           <div>
             <small>Arrecadado</small>
             <strong>Kz {{ campaign.valorArrecadado }}</strong>
@@ -62,27 +99,48 @@
             <small>Meta</small>
             <strong>Kz {{ campaign.valorAlvo }}</strong>
           </div>
+
         </div>
 
       </div>
 
       <hr>
 
-      <!-- FORM -->
-      <h3 class="section-title">Contribuir agora</h3>
+      <h3 class="section-title">
+        Contribuir agora
+      </h3>
 
       <div class="form-group">
+
         <label>Valor (Kz)</label>
-        <input type="number" [(ngModel)]="valor" placeholder="Ex: 5000">
+
+        <input
+          type="number"
+          [(ngModel)]="valor"
+          placeholder="Ex: 5000">
+
       </div>
 
       <div class="form-group">
+
         <label>Método de pagamento</label>
+
         <select [(ngModel)]="paymentMethod">
-          <option value="PAYPAY">PayPay</option>
-          <option value="MULTICAIXA_EXPRESS">Multicaixa Express</option>
-          <option value="REFERENCIA">Referência Bancária</option>
+
+          <option value="PAYPAY">
+            PayPay
+          </option>
+
+          <option value="MULTICAIXA_EXPRESS">
+            Multicaixa Express
+          </option>
+
+          <option value="REFERENCIA">
+            Referência Bancária
+          </option>
+
         </select>
+
       </div>
 
       <button
@@ -91,6 +149,7 @@
         [disabled]="valor <= 0">
 
         Apoiar agora
+
       </button>
 
     </div>

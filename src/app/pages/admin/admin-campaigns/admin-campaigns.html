@@ -32,13 +32,15 @@
 
         <td>
 
-          Kz {{ c.valorArrecadado }} / Kz {{ c.valorAlvo }}
+          Kz {{ c.valorArrecadado | number }}
+          /
+          Kz {{ c.valorAlvo | number }}
 
           <div class="progress">
 
             <div
               class="bar"
-              [style.width.%]="(c.valorArrecadado/c.valorAlvo)*100">
+              [style.width.%]="(c.valorArrecadado / c.valorAlvo) * 100">
 
             </div>
 
@@ -48,7 +50,9 @@
 
         <td>
 
-          <span class="badge" [ngClass]="c.estado">
+          <span
+            class="badge"
+            [ngClass]="c.estado">
 
             {{ c.estado }}
 
@@ -68,7 +72,7 @@
 
           <button
             class="btn-approve"
-            *ngIf="c.estado!='ATIVA'"
+            *ngIf="c.estado !== 'ATIVA'"
             (click)="approveCampaign(c.id)">
 
             Aprovar
@@ -95,7 +99,9 @@
 
 </div>
 
-<!-- MODAL -->
+<!-- =======================
+       MODAL DETALHES
+======================== -->
 
 <div class="modal" *ngIf="modalAberto">
 
@@ -105,31 +111,77 @@
 
       <h2>Detalhes da Campanha</h2>
 
-      <button class="close" (click)="fecharModal()">
+      <button
+        class="close"
+        (click)="fecharModal()">
+
         ×
+
       </button>
 
     </div>
 
     <div class="modal-body">
 
+      <!-- IMAGEM -->
+
       <img
-        [src]="campanhaSelecionada.imagemUrl || 'https://picsum.photos/800/400'">
+        [src]="campanhaSelecionada.imagemUrl || 'https://picsum.photos/900/450'"
+        class="w-100 rounded mb-4">
 
       <h2>{{ campanhaSelecionada.titulo }}</h2>
 
-      <p>
+      <p class="descricao">
+
         {{ campanhaSelecionada.descricao }}
+
       </p>
+
+      <!-- VÍDEO -->
+
+      <div class="mt-4" *ngIf="campanhaSelecionada.videoUrl">
+
+        <h3>Vídeo da campanha</h3>
+
+        <video
+          controls
+          class="w-100 rounded shadow">
+
+          <!-- Se videoUrl já for uma URL completa -->
+          <source
+            [src]="campanhaSelecionada.videoUrl"
+            type="video/mp4">
+
+          O seu navegador não suporta vídeo.
+
+        </video>
+
+      </div>
+
+      <!-- Caso não exista vídeo -->
+
+      <div
+        class="alert alert-secondary mt-4"
+        *ngIf="!campanhaSelecionada.videoUrl">
+
+        Esta campanha não possui vídeo.
+
+      </div>
+
+      <!-- INFORMAÇÕES -->
 
       <div class="info">
 
         <div class="info-card">
+
           <h4>Proponente</h4>
+
           <p>{{ campanhaSelecionada.proponente }}</p>
+
         </div>
 
         <div class="info-card">
+
           <h4>Estado</h4>
 
           <span
@@ -143,22 +195,38 @@
         </div>
 
         <div class="info-card">
+
           <h4>Meta</h4>
-          <p>Kz {{ campanhaSelecionada.valorAlvo }}</p>
+
+          <p>
+
+            Kz {{ campanhaSelecionada.valorAlvo | number }}
+
+          </p>
+
         </div>
 
         <div class="info-card">
+
           <h4>Arrecadado</h4>
-          <p>Kz {{ campanhaSelecionada.valorArrecadado }}</p>
+
+          <p>
+
+            Kz {{ campanhaSelecionada.valorArrecadado | number }}
+
+          </p>
+
         </div>
 
       </div>
 
-      <div class="progress">
+      <!-- PROGRESSO -->
+
+      <div class="progress mt-4">
 
         <div
           class="bar"
-          [style.width.%]="(campanhaSelecionada.valorArrecadado/campanhaSelecionada.valorAlvo)*100">
+          [style.width.%]="(campanhaSelecionada.valorArrecadado / campanhaSelecionada.valorAlvo) * 100">
 
         </div>
 

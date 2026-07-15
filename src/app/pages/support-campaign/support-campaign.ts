@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -12,15 +12,15 @@ import { CampaignService } from '../../core/services/campaign.service';
   templateUrl: './support-campaign.html',
   styleUrl: './support-campaign.css',
 })
-export class SupportCampaign {
+export class SupportCampaign implements OnInit {
 
-  valor: number = 0;
-  paymentMethod: string = 'PAYPAY';
+  valor = 0;
+  paymentMethod = 'PAYPAY';
 
-  private campaignId: number;
+  private campaignId!: number;
+
   private refresh$ = new BehaviorSubject<void>(undefined);
 
-  // 🔥 CORRETO: busca apenas a campanha atual
   campaign$ = this.refresh$.pipe(
     switchMap(() =>
       this.campaignService.getCampaignById(this.campaignId)
@@ -31,30 +31,52 @@ export class SupportCampaign {
     private route: ActivatedRoute,
     private router: Router,
     private campaignService: CampaignService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
+
     this.campaignId = Number(
       this.route.snapshot.paramMap.get('id')
     );
+
+    // Apenas para verificar se o vídeo está chegando
+    this.campaign$.subscribe(campaign => {
+      console.log('Campanha:', campaign);
+      console.log('Vídeo:', campaign.videoUrl);
+    });
+
   }
 
   apoiar(): void {
 
-  if (this.valor <= 0) return;
+    if (this.valor <= 0) {
+      return;
+    }
 
-  this.campaignService
-    .supportCampaign(this.campaignId, this.valor, this.paymentMethod)
-    .subscribe({
-      next: () => {
+    this.campaignService
+      .supportCampaign(
+        this.campaignId,
+        this.valor,
+        this.paymentMethod
+      )
+      .subscribe({
+        next: () => {
 
-        this.valor = 0;
+          this.valor = 0;
 
-        // 🔥 FORÇA reload direto (sem BehaviorSubject)
-        this.campaign$ = this.campaignService.getCampaignById(this.campaignId);
-      },
-      error: err => console.error(err)
-    });
-}
+          // Atualiza os dados da campanha
+          this.refresh$.next();
+
+          alert('Contribuição realizada com sucesso!');
+
+        },
+        error: err => console.error(err)
+      });
+
+  }
+
   voltar(): void {
     this.router.navigate(['/']);
   }
+
 }
