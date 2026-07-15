@@ -47,28 +47,38 @@ export class Perfil {
 
   selecionarFoto(event: any) {
 
-    const file = event.target.files[0];
+  const file = event.target.files[0];
 
-    if (!file) {
-      return;
-    }
-
-    this.userService
-      .uploadAvatar(this.userId, file)
-      .subscribe({
-
-        next: () => {
-
-          this.loadProfile();
-
-          alert('Foto atualizada com sucesso!');
-
-        },
-
-        error: err => console.error(err)
-
-      });
-
+  if (!file) {
+    return;
   }
+
+  this.userService
+    .uploadAvatar(this.userId, file)
+    .subscribe({
+
+      next: () => {
+
+        // Atualiza os dados do perfil
+        this.loadProfile();
+
+        // Mensagem de sucesso
+        alert('Foto de perfil atualizada com sucesso!');
+
+        // Recarrega a página após 500ms
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+
+      },
+
+      error: err => {
+        console.error(err);
+        alert('Erro ao atualizar a foto.');
+      }
+
+    });
+
+}
 
 }

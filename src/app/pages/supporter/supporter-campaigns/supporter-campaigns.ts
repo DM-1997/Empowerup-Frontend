@@ -40,33 +40,62 @@ export class SupporterCampaigns {
     ),
 
     map((data: any[]) =>
-      data.map(campanha => {
+  data.map(campanha => {
 
-        const meta = campanha.meta || 0;
-        const arrecadado = campanha.arrecadado || 0;
 
-        return {
+    const meta =
+      campanha.valorAlvo || 0;
 
-          ...campanha,
 
-          imageUrl:
-            campanha.imagemUrl ||
-            (
-              campanha.imagem
-                ? this.IMAGE_URL + campanha.imagem
-                : 'https://picsum.photos/700/450'
-            ),
+    const arrecadado =
+      campanha.valorArrecadado || 0;
 
-          percentual: meta
-            ? Math.round((arrecadado / meta) * 100)
-            : 0,
 
-          restante: meta - arrecadado
 
-        };
+    return {
 
-      })
-    )
+
+      ...campanha,
+
+
+      // imagem
+      imageUrl:
+        campanha.imagemUrl ||
+        'https://picsum.photos/700/450',
+
+
+
+      // valores reais
+      meta: meta,
+
+
+      arrecadado: arrecadado,
+
+
+
+      // percentual
+      percentual: meta > 0
+
+        ? Math.round(
+            (arrecadado / meta) * 100
+          )
+
+        : 0,
+
+
+
+      // valor que falta
+      restante:
+
+        meta - arrecadado
+
+
+
+    };
+
+
+  })
+)
 
   );
 
